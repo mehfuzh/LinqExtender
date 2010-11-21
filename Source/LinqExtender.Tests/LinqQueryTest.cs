@@ -18,9 +18,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
-
-            Assert.AreEqual(ReadFromFile(), result);
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
 
         [Test]
@@ -35,7 +33,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadFromFile(), builder.ToString());
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
 
         [Test]
@@ -51,9 +49,8 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
 
-            Assert.AreEqual(ReadFromFile(), result);
         }
 
         [Test]
@@ -70,9 +67,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
-
-            Assert.AreEqual(ReadFromFile(), result);
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
 
         [Test]
@@ -88,9 +83,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
-
-            Assert.AreEqual(ReadFromFile(), result);
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
 
         [Test]
@@ -106,9 +99,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
-
-            Assert.AreEqual(ReadFromFile(), result);
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
 
         [Test]
@@ -123,9 +114,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
-
-            Assert.AreEqual(ReadFromFile(), result);
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
 
         [Test]
@@ -140,9 +129,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
-
-            Assert.AreEqual(ReadFromFile(), result);
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
 
         [Test]
@@ -157,9 +144,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
-
-            Assert.AreEqual(ReadFromFile(), result);
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
 
         private string GetAuthorName()

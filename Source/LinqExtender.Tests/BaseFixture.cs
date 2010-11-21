@@ -6,12 +6,13 @@ using System.Diagnostics;
 using System.Reflection;
 using System.IO;
 using NUnit.Framework;
+using System.Text.RegularExpressions;
 
 namespace LinqExtender.Tests
 {
     public class BaseFixture
     {
-        protected string ReadFromFile()
+        protected string ReadTestCase()
         {
             var frame = new StackTrace(1).GetFrame(0);
 
@@ -22,6 +23,12 @@ namespace LinqExtender.Tests
             return expected;
         }
 
+        protected string RemoveEscape(StringBuilder builder)
+        {
+            string content = builder.ToString();
+            return Regex.Replace(content, "[\r\n\t]", string.Empty);
+        }
+
         private string ReadResult(string testname)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -30,7 +37,8 @@ namespace LinqExtender.Tests
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
-                    return reader.ReadToEnd();
+                    string content = reader.ReadToEnd();
+                    return Regex.Replace(content, "[\r\n\t]", string.Empty);
                 }
             }
         }

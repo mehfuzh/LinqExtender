@@ -20,9 +20,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
-
-            Assert.AreEqual(ReadFromFile(), result);
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
 
         [Test]
@@ -37,8 +35,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            string result = builder.ToString();
-
+            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
         }
     }
 }
