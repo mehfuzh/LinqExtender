@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C3EA3FA4-C790-413D-A2D9-F59E8767CD9B}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LinqExtender.Silverlight</RootNamespace>
+    <AssemblyName>LinqExtender.Silverlight</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Abstraction\IBucket.cs">
+      <Link>Abstraction\IBucket.cs</Link>
+    </Compile>
+    <Compile Include="..\Abstraction\IClassGenerator.cs">
+      <Link>Abstraction\IClassGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Abstraction\IContainer.cs">
+      <Link>Abstraction\IContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\Abstraction\IMethodCall.cs">
+      <Link>Abstraction\IMethodCall.cs</Link>
+    </Compile>
+    <Compile Include="..\Abstraction\IModifiableCollection.cs">
+      <Link>Abstraction\IModifiableCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Abstraction\IQueryObject.cs">
+      <Link>Abstraction\IQueryObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Abstraction\IQueryObjectImpl.cs">
+      <Link>Abstraction\IQueryObjectImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\Abstraction\IVersionItem.cs">
+      <Link>Abstraction\IVersionItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Ast\BinaryExpression.cs">
+      <Link>Ast\BinaryExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\Ast\BlockExpression.cs">
+      <Link>Ast\BlockExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\Ast\Expression.cs">
+      <Link>Ast\Expression.cs</Link>
+    </Compile>
+    <Compile Include="..\Ast\LambdaExpression.cs">
+      <Link>Ast\LambdaExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\Ast\LiteralExpression.cs">
+      <Link>Ast\LiteralExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\Ast\LogicalExpression.cs">
+      <Link>Ast\LogicalExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\Ast\MemberExpression.cs">
+      <Link>Ast\MemberExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\Ast\OrderbyExpression.cs">
+      <Link>Ast\OrderbyExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\Ast\TypeExpression.cs">
+      <Link>Ast\TypeExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\Attributes\IgnoreAttribute.cs">
+      <Link>Attributes\IgnoreAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Attributes\NameAttribute.cs">
+      <Link>Attributes\NameAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Attributes\UniqueIdentifierAttribute.cs">
+      <Link>Attributes\UniqueIdentifierAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\BinaryOperator.cs">
+      <Link>BinaryOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\Bucket.cs">
+      <Link>Bucket.cs</Link>
+    </Compile>
+    <Compile Include="..\BucketImpl.cs">
+      <Link>BucketImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\BucketImpls.cs">
+      <Link>BucketImpls.cs</Link>
+    </Compile>
+    <Compile Include="..\BucketItem.cs">
+      <Link>BucketItem.cs</Link>
+    </Compile>
+    <Compile Include="..\ClassGenerator.cs">
+      <Link>ClassGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\CodeType.cs">
+      <Link>CodeType.cs</Link>
+    </Compile>
+    <Compile Include="..\Collection\QueryCollection.cs">
+      <Link>Collection\QueryCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Collection\ReadOnlyQueryCollection.cs">
+      <Link>Collection\ReadOnlyQueryCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\ExpressionVisitor.cs">
+      <Link>ExpressionVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\Fluent\FluentBucket.cs">
+      <Link>Fluent\FluentBucket.cs</Link>
+    </Compile>
+    <Compile Include="..\Fluent\FluentEntity.cs">
+      <Link>Fluent\FluentEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Fluent\FluentExpressionTree.cs">
+      <Link>Fluent\FluentExpressionTree.cs</Link>
+    </Compile>
+    <Compile Include="..\Fluent\FluentIterator.cs">
+      <Link>Fluent\FluentIterator.cs</Link>
+    </Compile>
+    <Compile Include="..\IQueryContext.cs">
+      <Link>IQueryContext.cs</Link>
+    </Compile>
+    <Compile Include="..\LogicalOperator.cs">
+      <Link>LogicalOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MemberReference.cs">
+      <Link>MemberReference.cs</Link>
+    </Compile>
+    <Compile Include="..\Messages.Designer.cs">
+      <Link>Messages.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\MethodNames.cs">
+      <Link>MethodNames.cs</Link>
+    </Compile>
+    <Compile Include="..\ProjectedQuery.cs">
+      <Link>ProjectedQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\ProviderException.cs">
+      <Link>ProviderException.cs</Link>
+    </Compile>
+    <Compile Include="..\Query.cs">
+      <Link>Query.cs</Link>
+    </Compile>
+    <Compile Include="..\Queryable.cs">
+      <Link>Queryable.cs</Link>
+    </Compile>
+    <Compile Include="..\QueryItemComparer.cs">
+      <Link>QueryItemComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\QueryObject.cs">
+      <Link>QueryObject.cs</Link>
+    </Compile>
+    <Compile Include="..\QueryProvider.cs">
+      <Link>QueryProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\TreeNode.cs">
+      <Link>TreeNode.cs</Link>
+    </Compile>
+    <Compile Include="..\TypeReference.cs">
+      <Link>TypeReference.cs</Link>
+    </Compile>
+    <Compile Include="..\Utility.cs">
+      <Link>Utility.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="..\Messages.resx">
+      <Link>Messages.resx</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
