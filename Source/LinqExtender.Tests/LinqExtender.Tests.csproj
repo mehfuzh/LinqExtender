@@ -61,35 +61,35 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertSimpleWhereClause.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertSimpleWhereClause.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertSimpleWhereWithLogicalExpression.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertSimpleWhereWithLogicalExpression.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertWhereWithNestedLeftLogicalExpression.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertWhereWithNestedLeftLogicalExpression.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertWhereWithtNestedRightLogicalExpression.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertWhereWithtNestedRightLogicalExpression.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertWhereWithNestedLeftAndRightLogicaExpression.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertWhereWithNestedLeftAndRightLogicaExpression.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertSimpleSelect.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertSimpleSelect.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertSimpleOrderBySelect.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertSimpleOrderBySelect.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertObjectNameAsSpecifiedInNameAttribute.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertObjectNameAsSpecifiedInNameAttribute.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertOrderByDescending.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertOrderByDescending.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ShouldAssertSimpleWhereThatHasMethodCall.sql" />
-    <Content Include="Scripts\ShouldAssertPropertyNameAsSpeficiedInNameAttribute.sql" />
+    <EmbeddedResource Include="Cases\ShouldAssertSimpleWhereThatHasMethodCall.txt" />
+    <EmbeddedResource Include="Cases\ShouldAssertPropertyNameAsSpeficiedInNameAttribute.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

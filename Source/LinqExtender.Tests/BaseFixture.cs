@@ -26,7 +26,7 @@ namespace LinqExtender.Tests
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
 
-            using (Stream stream = assembly.GetManifestResourceStream("LinqExtender.Tests.Scripts." + testname + ".sql"))
+            using (Stream stream = assembly.GetManifestResourceStream(String.Format("LinqExtender.Tests.Cases.{0}.txt", testname)))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {

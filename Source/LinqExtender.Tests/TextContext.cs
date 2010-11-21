@@ -109,7 +109,7 @@ namespace LinqExtender.Tests
 
         private void WriteNewLine()
         {
-            writer.Write("\n");
+            writer.Write(Environment.NewLine);
         }
 
         private void WriteTokenIfReq(Ast.LogicalExpression expression, Token token)
