@@ -1,0 +1,10 @@
+h1
+{
+	background-image : url ('/images/linqextender.jpg');
+	font-size : 28px;
+}
+
+header, footer, em
+{
+  display:block;
+}
