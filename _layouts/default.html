@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{ page.title }}</title>
+  <title>LinqExtender- A toolkit for building custom providers</title>
 </head>
   <body>
-    <h1>{{ page.title }}</h1>
-    {{ content }}
+  {{content}}
+  
+{% for post in site.Posts %}
+    <h1>{{ post.title }}</h1>
+    
+    {{ post.content }}
+    
+    <em>Posted on {{ post.date | date_to_long_string }}</em>
+  {% endfor %}
   </body>
 </html>
