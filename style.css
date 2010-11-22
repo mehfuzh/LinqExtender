@@ -14,7 +14,7 @@ header img
 }
 
 
-header, footer, em, section
+header, footer, em, section, p
 {
   display:block;
 }
