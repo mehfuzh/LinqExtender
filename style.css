@@ -1,7 +1,7 @@
 h1
 {
-	background-image : url ('/images/linqextender.jpg');
-	font-size : 28px;
+	background: url ('/images/linqextender.jpg') none;
+	font-size : 30px;
 }
 
 header, footer, em
