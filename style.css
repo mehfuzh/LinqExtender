@@ -1,10 +1,20 @@
-h1
+header h1
 {
-	background: url ('/images/linqextender.jpg') none;
 	font-size : 30px;
+	display:inline;
 }
 
-header, footer, em
+header img
+{
+	float:left;
+	border : 0px;
+	padding-top:10px;
+	margin-right:10px;
+	margin-left:5px;
+}
+
+
+header, footer, em, section
 {
   display:block;
 }
