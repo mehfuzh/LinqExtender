@@ -12,6 +12,7 @@ LinqExtender provides an entry-point interface that is invoked with populated si
 
 Moreover, It abstracts the complexity of intializing the query provider, doing projection, parsing method calls and extracting  value from original System.Linq.Expresssion thus speeds up the creation of custom provider.
 
+<pre>
 
 <code>
 
@@ -22,5 +23,6 @@ public interface IQueryContext<T>
 
 </code>
 
+</pre>
 
 Unfininshed....
