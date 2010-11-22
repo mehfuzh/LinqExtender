@@ -14,7 +14,12 @@ header img
 }
 
 
-header, footer, em, section, p
+header, footer, em
+{
+  display:block;
+}
+
+section
 {
   display:block;
 }
