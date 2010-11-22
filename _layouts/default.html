@@ -6,7 +6,7 @@
   <body>
   {{content}}
   
-{% for post in site.Posts %}
+{% for post in site.posts limit:5 %}
     <h1>{{ post.title }}</h1>
     
     {{ post.content }}
