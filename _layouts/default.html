@@ -7,16 +7,17 @@
 </head>
  
  <body>
+  
   <header> 
 	
-		<img src="images/linqExtender.jpg" alt="LinqExtender">
-    <h1> {{ page.title }} </h1> 
+	<img src="images/linqExtender.jpg" alt="LinqExtender">
+	<h1> {{ page.title }} </h1> 
 	
 	</header>
  
-  <p>{{content}} </p>
- 
   <section>
+  <p>{{content}} </p>
+
   {% for post in site.posts limit:5 %}
     
   <h2>{{ post.title }}</h2>

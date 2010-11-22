@@ -1,25 +1,33 @@
-header h1
+header > h1
 {
-	font-size : 30px;
+	font-size : 40px;
 	display:inline;
 }
 
-header img
+header > img
 {
 	float:left;
 	border : 0px;
-	padding-top:10px;
-	margin-right:10px;
-	margin-left:5px;
+	margin-left:2px;
+	margin-right : 20px;
+	height : 50px;
 }
 
 
-header, footer, em
+header
+{
+	display:block;
+	margin-top : 20px;
+}
+
+footer, em
 {
   display:block;
 }
 
 section
 {
-  display:block;
+	padding-top : 40px;
+	margin-left:5px;
+	display:block;
 }
