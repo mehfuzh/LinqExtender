@@ -20,11 +20,11 @@
   
   {% for post in site.posts limit:5 %}
     
-    <h1>{{ post.title }}</h1>
-    
-    {{ post.content }}
-    
-    <em>Posted on {{ post.date | date_to_long_string }}</em>
+  <h1>{{ post.title }}</h1>
+  
+  {{ post.content }}
+  
+  <em>Posted on {{ post.date | date_to_long_string }}</em>
     
   {% endfor %}
 
