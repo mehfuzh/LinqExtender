@@ -3,32 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <title>LinqExtender- A toolkit for building custom providers</title>
-  <link rel="stylesheet" href="/style.css" type="text/css" />
+  <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
-  <body>
-  <header>
-  
-    <h1> {{ title }} </h1>
-  
+ 
+ <body>
+  <header> 
+    <h1> {{ post.title }} </h1> 
   </header>
   
   <nav>
-  
   </nav>
-  
+
   <section>
   
   {{content}}
   
   {% for post in site.posts limit:5 %}
+    
     <h1>{{ post.title }}</h1>
     
     {{ post.content }}
     
     <em>Posted on {{ post.date | date_to_long_string }}</em>
+    
   {% endfor %}
 
-</section>
+  </section>
 
   </body>
+
 </html>
