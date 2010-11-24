@@ -8,7 +8,7 @@ title : Gettting Started
 The goal of this post is to get started creating custom provider using LinqExtender.
 
 
-To begin, let's say i want to build a simple provider. the context or entry point class that will be queried upon, need to first implement the following interface:
+To begin, let's say i want to build a simple provider. The context or entry-point class that will be queried upon, need to first implement the following interface:
 
 {% highlight csharp %}
 	public interface IQueryContext<T>
@@ -17,10 +17,11 @@ To begin, let's say i want to build a simple provider. the context or entry poin
 	}
 {% endhighlight %}    
 
-The interface has only one method named Execute that accepts custom expression that is poplulated by the extender and which we will parsing to produce TSQL statment.
+The interface has only one method named _Execute_ that accepts translated expression that is poplulated by the extender and which we will be visiting to produce TSQL statement.
 
-Generally, the expresion with be visited by visitor pattern, one can write the vistor class specific to LinqExtender and include as an base class and override its various methods to build the expected query / request.
-However a similar class is provided in LinqExtender.Tests project to start as a reference.
+Generally, the expresion will be traversed by visitor pattern, one can write the vistor class specific to LinqExtender then include as an base class and override its various methods to build the expected meta that will be run against a data store or send over HTTP to produce the expected result.
+
+To smooth things up, a similar class is provided in LinqExtender.Tests project to start as a reference.
 
 Before doing a deep dive. Let me do an short introduction on how the simiplied tree is constructed.
 
@@ -192,10 +193,10 @@ BinaryExpression
 LogicalExpression
 	BinaryExpression
 	BinaryExpression
-	
-And to make a it work for general, simple way is that we parse Visit LogicalExpresion and set the groupings and logical operator as for binary we print the text for binary operation. _Here we don't have to bother a which order or how may level groupings are made._	
 
-Therefore for logical:
+To print / generate the equivalant TSQL for it , we first of all not need to worry about the order in which the gropings are made or the level of nested groupings used in the query. While visiting the expression , our task is to prepare the meta for the respected expression only and during the execution it will be inovoked by extender as it is specified in the query.
+	
+Therefore, inside VisitLogicalExpression, I wrote :
 
 {% highlight csharp %}
 	public override Ast.Expression VisitLogicalExpression(Ast.LogicalExpression expression)
