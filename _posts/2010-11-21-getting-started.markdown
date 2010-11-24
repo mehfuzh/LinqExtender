@@ -193,7 +193,7 @@ LogicalExpression
 	BinaryExpression
 	BinaryExpression
 	
-And to make a it work for general, simple way is that we parse Visit LogicalExpresion and set the groupings and logical operator as for binary we print the text for binary operation. __Here we don't have to bother a which order or how may level groupings are made.__	
+And to make a it work for general, simple way is that we parse Visit LogicalExpresion and set the groupings and logical operator as for binary we print the text for binary operation. _Here we don't have to bother a which order or how may level groupings are made._	
 
 Therefore for logical:
 
