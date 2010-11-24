@@ -2,35 +2,36 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>LinqExtender- A toolkit for building custom providers</title>
-  <link rel="stylesheet" href="style.css" type="text/css" />
+  	<title>LinqExtender- A toolkit for building custom providers</title>
+  	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link rel="stylesheet" href="syntax.css" type="text/css" />
 </head>
  
- <body>
+<body>
   
-  <header> 
-	
-	<img src="images/linqExtender.jpg" alt="LinqExtender">
-	</header>
  
-  <section class="headerText">
-    {{content}}
-  </section>
+	<header> 
+		<img src="images/linqExtender.jpg" alt="LinqExtender">
+	</header>
 
-  <section class="content">
+	<section class="headerText">
+		{{content}}
+	</section>
 
-  {% for post in site.posts limit:5 %}
-    
-  <h3>{{ post.title }}</h3>
-  
-  {{ post.content }}
-  
-  <em>Posted on {{ post.date | date_to_long_string }}</em>
-    
-  {% endfor %}
+	<section class="content">
 
-  </section>
+	{% for post in site.posts limit:5 %}
 
-  </body>
+		<h3>{{ post.title }}</h3>
+
+	{{ post.content }}
+
+		<em>Posted on {{ post.date | date_to_long_string }}</em>
+
+	{% endfor %}
+
+	</section>
+
+</body>
 
 </html>
