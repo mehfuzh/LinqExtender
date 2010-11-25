@@ -21,7 +21,7 @@
 
 	<section class="content">
 
-	{% for post in site.posts limit:5 %}
+	{% for post in site.posts limit:1 %}
 
 		<h3>{{ post.title }}</h3>
 
@@ -30,6 +30,12 @@
 		Last updated on {{ post.date | date_to_long_string }}
 
 	{% endfor %}
+
+	</section>
+	
+	<section class="links">
+	
+		{{ site.posts[1].content }}
 
 	</section>
 

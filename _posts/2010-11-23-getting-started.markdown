@@ -15,7 +15,7 @@ To begin, let's say i want to build a text provider that prints the TSQL represe
 	  IEnumerable<T> Execute(Ast.Expression expression);  
 	}
 
-The interface has only one method named *Execute* that accepts translated expression that is poplulated by the extender and which will be visited to produce the desired TSQL statement.
+The interface has only one method named `Execute` that accepts translated expression that is poplulated by the extender and which will be visited to produce the desired TSQL statement.
 
 Generally, the expression will be traversed by visitor pattern, one can write the vistor class specific to LinqExtender then include it as an base class and override its various methods to build the expected meta that will be run against a data store or send over HTTP to produce the expected result or even in my case build a simple TSQL.
 
@@ -23,7 +23,7 @@ To smooth things up, a similar class is provided in LinqExtender.Tests project w
 
 Before doing a deep dive. Let me do an short introduction on how the simiplied tree is constructed.
 
-Let me consider the following LINQ query:
+Let's consider the following LINQ query:
 
 	var query = from book in context
 				where book.Id  = 1
@@ -32,13 +32,13 @@ Let me consider the following LINQ query:
 This is translated into :
 	
 	BlockExpression
-		TypeExpression - Contains various reflected accessors on query object.
+		TypeExpression - Contains various reflected accessors for target object.
 		LambdaExpression - Represents the where clause.
 			BinaryExpression
-				MemberExpression - Contains member related method and accessors
+				MemberExpression - Contains member related to method and accessors
 				LiteralEpxression - Contains the evaluted value.
 
-Moving forward to a bit complex query:
+Moving forward to a bit more complex query:
 
 	var query = from book in context
 		where (book.Id > 1) && (book.Author == "Scott" || book.Author == "John")
@@ -47,11 +47,11 @@ Moving forward to a bit complex query:
 It is translated to:
 
 	BlockExpression
-		TypeExpression : Name == "Book", If NameAttribute applied then the specified one.
+		TypeExpression : Name == "Book", If NameAttribute applied then Name = "as specified".
 		LambdaExpression
 			LogicalExpresion - Contains the logical parts | Operator = LogicalOperator.AND
 				BinaryExpression 
-					MemberExpression - 
+					MemberExpression 
 						Name == "Id"
 					LiteralExpression
 						Value = 1	
@@ -68,7 +68,7 @@ It is translated to:
 							LiteralExpression
 								Value = "John"	
 									
-Here , BinaryExpresion or LambdaExpression is LinqExtender's version and thus all the expression contains various accesors and methods that easily let you get the query data.
+Here , BinaryExpression or LambdaExpression is LinqExtender's version and thus all the expression contains various accessors and methods that easily let you get query information.
 
 Moving forward, Lets add orderby to our first query:
 
@@ -94,10 +94,9 @@ If you write the above query in the following way:
 				orderby book.Author asc
 				select new { book.Id, book.Author };
 				
-It will also produce the same tree as above. Therefore, it is projected and parsed internally.
+It will also produce the same tree as the previous one. Therefore, it turns out that projection is taken care of internally.
 
-In our sample Text provider, output will be stored in a StringBuilder and we can then print it out to your desired
-media or compare it with our expected.
+In my sample Text provider, output will be stored in a StringBuilder and can be then printed out to Console.
 
 	var builder = new StringBuilder();
 	var context = new TextContext<Book>(new StringWriter(builder));
@@ -111,7 +110,7 @@ media or compare it with our expected.
 
 	Console.WriteLine(builder.ToString());				
 
-The first step is to implment IQueryContext interface to the TextContext 
+Now, inside the `IQueryContext<T>.Execute(Ast.Expression)`, i wrote it like: 
 
 	public IEnumerable<T> Execute(Ast.Expression expression)
 	{
@@ -119,7 +118,8 @@ The first step is to implment IQueryContext interface to the TextContext
 		return new List<T>().AsEnumerable();
 	}
 
-Since here result is not important, therefore returned a new instance of List. Addtionally, we have included the ExpressionVisitor from which we will be overriding methods to get our expected output.
+Since here result is not important, therefore returned a new instance of `List<T>` and `this.Visit(expression)` will eventually branch to various overrides from `ExpressionVisitor` that I have included in TextContext class; once it has reached the end, the builder will contain a nice formatted TSQL.
+
 
 Roughly the ExpresisonVisitor.Visit(Ast.Expresion) looks like:
 
@@ -148,7 +148,8 @@ Roughly the ExpresisonVisitor.Visit(Ast.Expresion) looks like:
 		throw new ArgumentException("Expression type is not supported");
 	}
 
-If we follow the translated flow, the first expression that I am interested is the TypeExperession where i will be appending the Select * From {TypeName}, can the entry point the REST method names as well like flickr.photos.getList
+If we follow the translated flow, the first expression that will be of my concern is the TypeExperession where i will be first formating "Select * From {TypeName}" string .
+
 
 	public override Ast.Expression VisitTypeExpression(Ast.TypeExpression expression)
 	{
@@ -156,7 +157,7 @@ If we follow the translated flow, the first expression that I am interested is t
 		return expression;
 	}
 	
-Now, expression.Type is not System.Type rather its LinqExtender.TypeReference, the Name returns either the original typename or the name that user specifies on top of the class through LinqExtender.NameAttribute , let's for example take the following class:
+Now, expression.Type is not System.Type rather its LinqExtender.TypeReference, the Name returns either the original typename or the name that user specifies on top of the class through LinqExtender.NameAttribute, let's for example take the following class:
 
 	[Name("flickr.photos.search")]
 	public class Photo
@@ -164,7 +165,9 @@ Now, expression.Type is not System.Type rather its LinqExtender.TypeReference, t
 
 	}
 
-Now if we take this part:
+In this case expression.Type.Name == "flickr.photos.search"
+
+Considering this part:
 where book.Id == 10 || (book.Id == 1 && book.Author == "Charlie")
 
 It will be translated like this
@@ -174,7 +177,7 @@ LogicalExpression
 	BinaryExpression
 	BinaryExpression
 
-To print / generate the equivalant TSQL for it , we first of all not need to worry about the order in which the gropings are made or the level of nested groupings used in the query. While visiting the expression , our task is to prepare the meta for the respected expression only and during the execution it will be inovoked by extender as it is specified in the query.
+To print / generate the equivalant TSQL for it , we first of all not need to worry about the order in which the gropings are made or the level of nested groupings are used in the query. While visiting the expression,  in any case we only have to generate the meta for the respected expression type. It will be inovoked by extender as it is specified in query during execution.
 	
 Therefore, inside VisitLogicalExpression, I wrote :
 
@@ -193,7 +196,7 @@ Therefore, inside VisitLogicalExpression, I wrote :
 		return expression;
 	}
 
-Here one interesting thing, we may want to include the grouping parenthesis only for nested LogicalExpression. Therefore WriteTokenIfReq is written in this way:
+Here one interesting thing, we may want to include the grouping parenthesis only for nested LogicalExpression. Therefore `WriteTokenIfReq` is written in this way:
 
 	private void WriteTokenIfReq(Ast.LogicalExpression expression, Token token)
 	{
@@ -203,7 +206,7 @@ Here one interesting thing, we may want to include the grouping parenthesis only
 		}
 	}
 
-Followingly, we visit BinaryExpression
+Followingly, I override the BinaryExpression:
 
 	public override Ast.Expression VisitBinaryExpression(Ast.BinaryExpression expression)
 	{
@@ -214,16 +217,17 @@ Followingly, we visit BinaryExpression
 		return expression;
 	}
 
-This leads to the Member and Value parsing. You can do things like
+This leads to the Member and Value parsing. In this case, we may how user might write his query, he can do:
 
 book.Id == "1"
 book.Id == GetId();
+...
+...
+etc
 
-,etc
+However, we dont have to bother how as in LinqExtender BinaryExpression.Left will either be BinaryExpression or MemberExpression and BinaryExpression.Right will either be BinaryExpression or LiteralExpression.
 
-You dont have to bother what kind user has specified, everthing will be parse and always return as MemberExpression and LiteralExpression
-
-You will visit MemberEpxression to print the member:
+In context of the text provider, I have to visit the MemberEpxression to print the member:
 
 	public override Ast.Expression VisitMemberExpression(Ast.MemberExpression expression)
 	{
@@ -233,14 +237,14 @@ You will visit MemberEpxression to print the member:
 
 Here i am printing the full member name includeing the typename , of course the NameAttribute will be applied here as well.
 
-However, MemberExpression few other useful members as well.
+However, MemberExpression wraps in other useful accessors and methods like:
 
 	MemberEpxression
 		Name 
-		FullName - Include the typename as well
-		Member - LinqExtender.MemberReference
-		DeclaringType - TypeReference
-		FindAttribute<T>()
+		FullName - Includes the type name
+		Member - is LinqExtender.MemberReference
+		DeclaringType - is TypeReference
+		FindAttribute<T>() - Finds user-defined attribute
 	
 
 Final step is to write the logic for VisitLiteralExpression
@@ -251,20 +255,20 @@ Final step is to write the logic for VisitLiteralExpression
 		return expression;
 	}
  	
-Here , expression.Type referes to the TypeReference of the value of returnType of the method that is compared in query
+Here , expression.Type referes to the TypeReference of value or member type that is compared in where
 
 
-Once the query is run you will find an output similar:
+Once the query is run it will print the output:
 	
 	select * from Book
 	where
 	Book.Id = 10 OR (Book.Id = 1 AND Book.Author = "Charlie")
 
-This is sample provider is included in LinqExtender.Tests project with addtional example, like how i have to visit OrderByExpression, I left that to the reader.
+This sample provider is included in LinqExtender.Tests project with addtional examples, like how i have to visit OrderByExpression, I leave that for the reader.
 
 
-The project is a revamp of the original LinqExtender project at [CodePlex](http://linqExtender.codeplex.com). You can find the download and source link at the top.
+The project is a revamp of the original LinqExtender project at [CodePlex](http://linqExtender.codeplex.com). The source and download is included at the top. Moreover, please feel free to fork and make updates and i will be happy to merge.
 
-Hope that helps
+Hope this helps
 
 
