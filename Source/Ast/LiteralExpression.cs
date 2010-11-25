@@ -8,18 +8,18 @@ namespace LinqExtender.Ast
     public class LiteralExpression : Expression
     {
         private object value;
-        private Type type;
+        private TypeReference type;
 
         public LiteralExpression(Type type, object value)
         {
-            this.type = type;
+            this.type = new TypeReference(type);
             this.value = value;
         }
 
         /// <summary>
         /// Gets type of the expression.
         /// </summary>
-        public Type Type
+        public TypeReference Type
         {
             get
             {

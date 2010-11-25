@@ -38,7 +38,7 @@ namespace LinqExtender.Tests
         public override Ast.Expression VisitBinaryExpression(Ast.BinaryExpression expression)
         {
             this.Visit(expression.Left);
-            writer.Write(GetBinaryOperator(expression.@operator));
+            writer.Write(GetBinaryOperator(expression.Operator));
             this.Visit(expression.Right);
 
             return expression;
@@ -139,9 +139,9 @@ namespace LinqExtender.Tests
             RightParentThesis
         }
 
-        private void WriteValue(Type type, object value)
+        private void WriteValue(TypeReference type, object value)
         {
-           if (type == typeof(string))
+           if (type.UnderlyingType == typeof(string))
                writer.Write(String.Format("\"{0}\"", value));
            else
                writer.Write(value);

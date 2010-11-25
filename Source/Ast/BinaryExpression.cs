@@ -1,16 +1,26 @@
 ﻿namespace LinqExtender.Ast
 {
+    /// <summary>
+    /// Represents the binary operation.
+    /// </summary>
     public class BinaryExpression : Expression
     {
-        public BinaryOperator @operator;
+        private BinaryOperator @operator;
         private Expression left;
         private Expression right;
 
-        public BinaryExpression(BinaryOperator @operator)
+        /// <summary>
+        /// Initalizes a new instance of the <see cref="BinaryExpression"/> class.
+        /// </summary>
+        /// <param name="@operator">Target operator</param>
+        internal BinaryExpression(BinaryOperator @operator)
         {
             this.@operator = @operator;
         }
 
+        /// <summary>
+        /// Gets the left expression.
+        /// </summary>
         public Expression Left
         {
             get
@@ -23,6 +33,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets the right expression
+        /// </summary>
         public Expression Right
         {
             get
@@ -35,6 +48,20 @@
             }
         }
 
+        /// <summary>
+        /// Gets the binary operator.
+        /// </summary>
+        public BinaryOperator Operator
+        {
+            get
+            {
+                return @operator;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating the type of expression.
+        /// </summary>
         public override CodeType CodeType
         {
             get { return CodeType.BinaryExpression; }

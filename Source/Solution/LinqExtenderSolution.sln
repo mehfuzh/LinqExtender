@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqExtender.Silverlight", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqExtender.Tests", "..\LinqExtender.Tests\LinqExtender.Tests.csproj", "{BA30AD53-4E10-4610-BDD2-BB823DF0325B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install", "Install", "{EB5980B4-B1BB-4855-BB31-A8BD40473824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqExtender.PackLib", "..\LinqExtender.PackLib\LinqExtender.PackLib.csproj", "{8A5B4179-FAAC-40B9-B844-CCA926165327}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,8 +29,14 @@ Global
 		{BA30AD53-4E10-4610-BDD2-BB823DF0325B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA30AD53-4E10-4610-BDD2-BB823DF0325B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA30AD53-4E10-4610-BDD2-BB823DF0325B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A5B4179-FAAC-40B9-B844-CCA926165327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A5B4179-FAAC-40B9-B844-CCA926165327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A5B4179-FAAC-40B9-B844-CCA926165327}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8A5B4179-FAAC-40B9-B844-CCA926165327} = {EB5980B4-B1BB-4855-BB31-A8BD40473824}
 	EndGlobalSection
 EndGlobal

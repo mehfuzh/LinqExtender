@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>LinqExtender</id>
+    <version>3.0</version>
+    <authors>Mehfuz Hossain</authors>
+    <description>A toolkit for building custom LINQ providers.</description>
+    <language>en-US</language>
+   <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
+  
+  </metadata>
+
+  <files>
+    
+    <file src="..\Content\ExpressionVisitor.cs.pp" target="content"/>
+    <file src="..\Content\DefaultContext.cs.pp" target="content"/>
+
+    <file src="..\..\bin\Debug\Net35\LinqExtender.*" target="lib/Net35"/>
+    <file src="..\..\bin\Debug\SL4\LinqExtender.*" target="lib/SL4" />
+  
+  </files>
+</package>

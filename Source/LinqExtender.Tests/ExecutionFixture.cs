@@ -66,11 +66,11 @@ namespace LinqExtender.Tests
 
             public override Ast.Expression VisitLiteralExpression(Ast.LiteralExpression expression)
             {
-                this.expression = Expression.Constant(expression.Value, expression.Type);
+                this.expression = Expression.Constant(expression.Value, expression.Type.UnderlyingType);
                 return expression;
             }
 
-            private IList<Book> source;
+            private readonly IList<Book> source;
             private Expression expression;
             private ParameterExpression parameter;
         }

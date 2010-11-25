@@ -5,10 +5,13 @@ using System.Text;
 
 namespace LinqExtender.Ast
 {
+    /// <summary>
+    /// Abstract base expression class that represents the LINQ query.
+    /// </summary>
     public abstract class Expression 
     {
         /// <summary>
-        /// Gets the type for the expression.
+        /// Gets a value indicating the type of expression.
         /// </summary>
         public abstract CodeType CodeType { get; }
     }

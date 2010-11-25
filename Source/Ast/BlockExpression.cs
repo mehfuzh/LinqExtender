@@ -8,11 +8,14 @@ namespace LinqExtender.Ast
     /// </summary>
     public class BlockExpression : Ast.Expression
     {
-        public BlockExpression()
+        internal BlockExpression()
         {
             expressions = new List<Expression>();
         }
 
+        /// <summary>
+        /// Gets the list of expression associated with the current query.
+        /// </summary>
         public IList<Expression> Expressions
         {
             get
@@ -21,6 +24,9 @@ namespace LinqExtender.Ast
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating the type of expression.
+        /// </summary>
         public override CodeType CodeType
         {
             get { return CodeType.BlockExpression; }
