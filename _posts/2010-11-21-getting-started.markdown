@@ -5,22 +5,21 @@ title : Gettting Started
 
 ### A simple Text provider using LinqExtender.
 
-The goal of this post is to get started creating custom provider using LinqExtender.
+The goal of this post is to get started creating custom LINQ (Language Integrated Query) provider using LinqExtender.
 
 
-To begin, let's say i want to build a simple provider. The context or entry-point class that will be queried upon, need to first implement the following interface:
-
+To begin, let's say i want to build a text provider that prints the TSQL representation of the LINQ query to the screen. Thus, i will create a context class and first implement the following interface from LinqExtender namespace:
 
 	public interface IQueryContext<T>
 	{
 	  IEnumerable<T> Execute(Ast.Expression expression);  
 	}
 
-The interface has only one method named _Execute_ that accepts translated expression that is poplulated by the extender and which we will be visiting to produce TSQL statement.
+The interface has only one method named *Execute* that accepts translated expression that is poplulated by the extender and which will be visited to produce the desired TSQL statement.
 
-Generally, the expresion will be traversed by visitor pattern, one can write the vistor class specific to LinqExtender then include as an base class and override its various methods to build the expected meta that will be run against a data store or send over HTTP to produce the expected result.
+Generally, the expression will be traversed by visitor pattern, one can write the vistor class specific to LinqExtender then include it as an base class and override its various methods to build the expected meta that will be run against a data store or send over HTTP to produce the expected result or even in my case build a simple TSQL.
 
-To smooth things up, a similar class is provided in LinqExtender.Tests project to start as a reference.
+To smooth things up, a similar class is provided in LinqExtender.Tests project which i will start as a reference.
 
 Before doing a deep dive. Let me do an short introduction on how the simiplied tree is constructed.
 
