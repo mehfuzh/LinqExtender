@@ -33,19 +33,6 @@ header > img
     margin-bottom:20px;
 }
 
-footer, em
-{
-  display:block;
-}
-
-.content
-{
-	float:left;
-    margin-left:2px;
-    margin-top:10px;
-    width:70%;
-}
-
 .links {
     padding-top : 40px;
 
@@ -64,4 +51,15 @@ footer, em
     border-bottom-left-radius: 20px;
 }
 
+.content
+{
+	float:left;
+    margin-left:2px;
+    margin-top:10px;
+    width:70%;
+}
 
+footer, em
+{
+  display:block;
+}

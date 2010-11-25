@@ -269,6 +269,7 @@ This sample provider is included in LinqExtender.Tests project with addtional ex
 
 The project is a revamp of the original LinqExtender project at [CodePlex](http://linqExtender.codeplex.com). The source and download is included at the top. Moreover, please feel free to fork and make updates and i will be happy to merge.
 
+
 Hope this helps
 
 
