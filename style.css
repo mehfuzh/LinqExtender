@@ -1,3 +1,12 @@
+html { font-family: "helvetica", Helvetica, Arial }
+
+body
+{
+	padding:0;
+	width : 100%;
+	min-width : 600px;
+}
+
 header
 {
 	
@@ -12,15 +21,6 @@ header > h1
 	display:inline;
 }
 
-html { font-family: "helvetica", Helvetica, Arial }
-
-body
-{
-	margin:0;
-	padding:0;
-	width : 100%;
-	min-width : 600px;
-}
 
 header > img
 {

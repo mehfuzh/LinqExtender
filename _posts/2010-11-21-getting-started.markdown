@@ -10,12 +10,11 @@ The goal of this post is to get started creating custom provider using LinqExten
 
 To begin, let's say i want to build a simple provider. The context or entry-point class that will be queried upon, need to first implement the following interface:
 
-{% highlight csharp %}
+
 	public interface IQueryContext<T>
 	{
 	  IEnumerable<T> Execute(Ast.Expression expression);  
 	}
-{% endhighlight %}    
 
 The interface has only one method named _Execute_ that accepts translated expression that is poplulated by the extender and which we will be visiting to produce TSQL statement.
 
@@ -27,11 +26,9 @@ Before doing a deep dive. Let me do an short introduction on how the simiplied t
 
 Let me consider the following LINQ query:
 
-{% highlight csharp %}
 	var query = from book in context
 				where book.Id  = 1
 				select book
-{% endhighlight %}				
 
 This is translated into :
 	
@@ -44,11 +41,9 @@ This is translated into :
 
 Moving forward to a bit complex query:
 
-{% highlight csharp %}
 	var query = from book in context
 		where (book.Id > 1) && (book.Author == "Scott" || book.Author == "John")
 		Select book
-{% endhighlight %}	
 
 It is translated to:
 
@@ -78,12 +73,10 @@ Here , BinaryExpresion or LambdaExpression is LinqExtender's version and thus al
 
 Moving forward, Lets add orderby to our first query:
 
-{% highlight csharp %}
 	var query = from book in context
 				where book.Id  = 1
 				orderby book.Author asc
 				select book
-{% endhighlight %}
 
 This will be translated to:
 
@@ -97,19 +90,16 @@ This will be translated to:
 
 If you write the above query in the following way:
 
-{% highlight csharp %}
 	var query = from book in context
 				where book.Id  = 1
 				orderby book.Author asc
 				select new { book.Id, book.Author };
-{% endhighlight %}
 				
 It will also produce the same tree as above. Therefore, it is projected and parsed internally.
 
 In our sample Text provider, output will be stored in a StringBuilder and we can then print it out to your desired
 media or compare it with our expected.
 
-{% highlight csharp %}
 	var builder = new StringBuilder();
 	var context = new TextContext<Book>(new StringWriter(builder));
 
@@ -121,23 +111,19 @@ media or compare it with our expected.
 	query.Count();
 
 	Console.WriteLine(builder.ToString());				
-{% endhighlight %}
 
 The first step is to implment IQueryContext interface to the TextContext 
 
-{% highlight csharp %}
 	public IEnumerable<T> Execute(Ast.Expression expression)
 	{
 		this.Visit(expression);
 		return new List<T>().AsEnumerable();
 	}
-{% endhighlight %}
 
 Since here result is not important, therefore returned a new instance of List. Addtionally, we have included the ExpressionVisitor from which we will be overriding methods to get our expected output.
 
 Roughly the ExpresisonVisitor.Visit(Ast.Expresion) looks like:
 
-{% highlight csharp %}
 	internal Ast.Expression Visit(Ast.Expression expression)
 	{
 		switch (expression.CodeType)
@@ -162,27 +148,22 @@ Roughly the ExpresisonVisitor.Visit(Ast.Expresion) looks like:
 
 		throw new ArgumentException("Expression type is not supported");
 	}
-{% endhighlight %}
 
 If we follow the translated flow, the first expression that I am interested is the TypeExperession where i will be appending the Select * From {TypeName}, can the entry point the REST method names as well like flickr.photos.getList
 
-{% highlight csharp %}
 	public override Ast.Expression VisitTypeExpression(Ast.TypeExpression expression)
 	{
 		writer.Write(string.Format("select * from {0}", expression.Type.Name));
 		return expression;
 	}
-{% endhighlight %}
 	
 Now, expression.Type is not System.Type rather its LinqExtender.TypeReference, the Name returns either the original typename or the name that user specifies on top of the class through LinqExtender.NameAttribute , let's for example take the following class:
 
-{% highlight csharp %}
 	[Name("flickr.photos.search")]
 	public class Photo
 	{
 
 	}
-{% endhighlight %}
 
 Now if we take this part:
 where book.Id == 10 || (book.Id == 1 && book.Author == "Charlie")
@@ -198,7 +179,6 @@ To print / generate the equivalant TSQL for it , we first of all not need to wor
 	
 Therefore, inside VisitLogicalExpression, I wrote :
 
-{% highlight csharp %}
 	public override Ast.Expression VisitLogicalExpression(Ast.LogicalExpression expression)
 	{
 		WriteTokenIfReq(expression, Token.LeftParenthesis);
@@ -213,11 +193,9 @@ Therefore, inside VisitLogicalExpression, I wrote :
 
 		return expression;
 	}
-{% endhighlight %}
 
 Here one interesting thing, we may want to include the grouping parenthesis only for nested LogicalExpression. Therefore WriteTokenIfReq is written in this way:
 
-{% highlight csharp %}
 	private void WriteTokenIfReq(Ast.LogicalExpression expression, Token token)
 	{
 		if (**expression.IsChild**)
@@ -225,11 +203,9 @@ Here one interesting thing, we may want to include the grouping parenthesis only
 		    WriteToken(token);
 		}
 	}
-{% endhighlight %}
 
 Followingly, we visit BinaryExpression
 
-{% highlight csharp %}
 	public override Ast.Expression VisitBinaryExpression(Ast.BinaryExpression expression)
 	{
 		this.Visit(expression.Left);
@@ -238,7 +214,6 @@ Followingly, we visit BinaryExpression
 
 		return expression;
 	}
-{% endhighlight %}
 
 This leads to the Member and Value parsing. You can do things like
 
@@ -251,13 +226,11 @@ You dont have to bother what kind user has specified, everthing will be parse an
 
 You will visit MemberEpxression to print the member:
 
-{% highlight csharp %}
 	public override Ast.Expression VisitMemberExpression(Ast.MemberExpression expression)
 	{
 		writer.Write(expression.FullName);
 		return expression;
 	}
-{% endhighlight %}
 
 Here i am printing the full member name includeing the typename , of course the NameAttribute will be applied here as well.
 
@@ -273,13 +246,11 @@ However, MemberExpression few other useful members as well.
 
 Final step is to write the logic for VisitLiteralExpression
 
-{% highlight csharp %}
 	public override Ast.Expression VisitLiteralExpression(Ast.LiteralExpression expression)
 	{
 		WriteValue(expression.Type, expression.Value);
 		return expression;
 	}
-{% endhighlight %}
  	
 Here , expression.Type referes to the TypeReference of the value of returnType of the method that is compared in query
 

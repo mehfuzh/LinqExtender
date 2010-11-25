@@ -4,12 +4,13 @@
   <meta charset="utf-8" />
   	<title>LinqExtender- A toolkit for building custom providers</title>
   	<link rel="stylesheet" href="style.css" type="text/css" />
-	<link rel="stylesheet" href="syntax.css" type="text/css" />
+	<link rel="stylesheet" title="Zenburn" href="highlight/styles/github.css">
 </head>
  
-<body>
-  
+<script src="highlight/highlight.pack.js"></script>
  
+<body>
+   
 	<header> 
 		<img src="images/linqExtender.jpg" alt="LinqExtender">
 	</header>
@@ -26,12 +27,17 @@
 
 	{{ post.content }}
 
-		<em>Posted on {{ post.date | date_to_long_string }}</em>
+		Last updated on {{ post.date | date_to_long_string }}
 
 	{% endfor %}
 
 	</section>
 
 </body>
+
+<script type="text/javascript">
+hljs.tabReplace = '    '; // 4 spaces
+hljs.initHighlightingOnLoad();
+</script>
 
 </html>
