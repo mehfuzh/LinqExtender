@@ -92,7 +92,7 @@ namespace LinqExtender.Fluent
             {
                 get
                 {
-                    return new FluentOrderByItem(bucket, ifUsed);
+                    return new FluentOrderByItem(bucket);
                 }
             }
          
@@ -115,10 +115,9 @@ namespace LinqExtender.Fluent
                 /// </summary>
                 /// <param name="bucket"></param>
                 /// <param name="ifUsed">Defines if a order by is used.</param>
-                internal FluentOrderByItem(IBucket bucket, bool ifUsed)
+                internal FluentOrderByItem(IBucket bucket)
                 {
                     this.bucket = bucket;
-                    this.ifUsed = ifUsed;
                 }
 
                 /// <summary>
@@ -134,7 +133,6 @@ namespace LinqExtender.Fluent
                 }
 
                 private readonly IBucket bucket;
-                private readonly bool ifUsed;
             }
         }
 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -49,10 +49,6 @@
       <Project>{A2171F32-6AB4-4BA4-920B-EB1D28F5F7F2}</Project>
       <Name>LinqExtender</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LinqExtender.Silverlight\LinqExtender.Silverlight.csproj">
-      <Project>{C3EA3FA4-C790-413D-A2D9-F59E8767CD9B}</Project>
-      <Name>LinqExtender.Silverlight</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="LinqExtender.nuspec">
@@ -60,6 +56,7 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"$(SolutionDir)Tools\NuGet.exe" pack "LinqExtender.nuspec"</PostBuildEvent>
   </PropertyGroup>
