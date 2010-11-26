@@ -22,9 +22,11 @@ header > h1
 
 header > img
 {
+	float:left;
 	border : 0px;
 	margin-left:1px;
 	clear:right;
+	
 }
 
 .headerText
