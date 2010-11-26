@@ -172,10 +172,10 @@ where book.Id == 10 || (book.Id == 1 && book.Author == "Charlie")
 
 It will be translated like this
 
-BinaryExpression
-LogicalExpression
 	BinaryExpression
-	BinaryExpression
+	LogicalExpression
+		BinaryExpression
+		BinaryExpression
 
 To print / generate the equivalant TSQL for it , we first of all not need to worry about the order in which the gropings are made or the level of nested groupings are used in the query. While visiting the expression,  in any case we only have to generate the meta for the respected expression type. It will be inovoked by extender as it is specified in query during execution.
 	
@@ -219,11 +219,11 @@ Followingly, I override the BinaryExpression:
 
 This leads to the Member and Value parsing. In this case, we may how user might write his query, he can do:
 
-book.Id == "1"
-book.Id == GetId();
-...
-...
-etc
+	book.Id == "1"
+	book.Id == GetId();
+	...
+	...
+	etc
 
 However, we dont have to bother how as in LinqExtender BinaryExpression.Left will either be BinaryExpression or MemberExpression and BinaryExpression.Right will either be BinaryExpression or LiteralExpression.
 
@@ -271,5 +271,3 @@ The project is a revamp of the original LinqExtender project at [CodePlex](http:
 
 
 Hope this helps
-
-

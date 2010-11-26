@@ -19,6 +19,12 @@
 		{{content}}
 	</section>
 
+	
+	<section class="links">
+		{{ site.posts[1].content }}
+	</section>
+
+
 	<section class="content">
 
 	{% for post in site.posts limit:1 %}
@@ -27,14 +33,10 @@
 
 	{{ post.content }}
 
-		Last updated on {{ post.date | date_to_long_string }}
+	<p class="smallText">Last updated on {{ post.date | date_to_long_string }} by Mehfuz Hossain</p>
 
 	{% endfor %}
 
-	</section>
-	
-	<section class="links">
-		{{ site.posts[1].content }}
 	</section>
 
 </body>
