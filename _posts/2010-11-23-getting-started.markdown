@@ -217,7 +217,7 @@ Followingly, I override the BinaryExpression:
 		return expression;
 	}
 
-This leads to the Member and Value parsing. In this case, we may how user might write his query, he can do:
+This leads to the Member and Value parsing. In this case, we dont have the control over how user might write his query, he can do:
 
 	book.Id == "1"
 	book.Id == GetId();
@@ -225,9 +225,9 @@ This leads to the Member and Value parsing. In this case, we may how user might 
 	...
 	etc
 
-However, we dont have to bother how as in LinqExtender BinaryExpression.Left will either be BinaryExpression or MemberExpression and BinaryExpression.Right will either be BinaryExpression or LiteralExpression.
+However, we dont have to bother how as in LinqExtender BinaryExpression.Left will either be BinaryExpression or MemberExpression and BinaryExpression.Right will either be BinaryExpression or LiteralExpression. Since, it internally handled.
 
-In context of the text provider, I have to visit the MemberEpxression to print the member:
+In the sample provider, I overriden `VisitMemberExpression` to simply print the member:
 
 	public override Ast.Expression VisitMemberExpression(Ast.MemberExpression expression)
 	{
@@ -235,9 +235,9 @@ In context of the text provider, I have to visit the MemberEpxression to print t
 		return expression;
 	}
 
-Here i am printing the full member name includeing the typename , of course the NameAttribute will be applied here as well.
+Here to include i am printing the full member name includeing that includes typename (of course the NameAttribute will be applied here as well).
 
-However, MemberExpression wraps in other useful accessors and methods like:
+However, `MemberExpression` class contains other accessors and methods that can be useful in more complex scenarios:
 
 	MemberEpxression
 		Name 
@@ -247,7 +247,7 @@ However, MemberExpression wraps in other useful accessors and methods like:
 		FindAttribute<T>() - Finds user-defined attribute
 	
 
-Final step is to write the logic for VisitLiteralExpression
+Over to getting started, final step is to print value aginst `VisitLiteralExpression`
 
 	public override Ast.Expression VisitLiteralExpression(Ast.LiteralExpression expression)
 	{
@@ -255,7 +255,7 @@ Final step is to write the logic for VisitLiteralExpression
 		return expression;
 	}
  	
-Here , expression.Type referes to the TypeReference of value or member type that is compared in where
+Here, `expression.Type` referes to the TypeReference of value or member type from where caluse.
 
 
 Once the query is run it will print the output:
@@ -264,10 +264,10 @@ Once the query is run it will print the output:
 	where
 	Book.Id = 10 OR (Book.Id = 1 AND Book.Author = "Charlie")
 
-This sample provider is included in LinqExtender.Tests project with addtional examples, like how i have to visit OrderByExpression, I leave that for the reader.
+This sample provider is included in LinqExtender.Tests project with addtional examples, like how i have to visit `OrderByExpression`, I leave that for the reader to explore.
 
 
-The project is a revamp of the original LinqExtender project at [CodePlex](http://linqExtender.codeplex.com). The source and download is included at the top. Moreover, please feel free to fork and make updates and i will be happy to merge.
+The project is a revamp of the original LinqExtender project at [CodePlex](http://linqExtender.codeplex.com). The source and download is included at the top. Moreover, please feel free to fork, make updates and i will be happy to merge.
 
 
-Hope this helps
+Happy Coding!!
