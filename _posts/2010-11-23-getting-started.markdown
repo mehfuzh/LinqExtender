@@ -211,7 +211,7 @@ Followingly, I override the BinaryExpression:
 	public override Ast.Expression VisitBinaryExpression(Ast.BinaryExpression expression)
 	{
 		this.Visit(expression.Left);
-		writer.Write(GetBinaryOperator(expression.@operator));
+		writer.Write(GetBinaryOperator(expression.Operator));
 		this.Visit(expression.Right);
 
 		return expression;

@@ -12,15 +12,12 @@ header
     margin-top : 20px;
 }
 
-
-header > h1
+section
 {
-	font-size : 40px;
-	display:inline;
+	display:block;
 }
 
-
-header > img
+header img
 {
 	float:left;
 	border : 0px;
@@ -42,9 +39,9 @@ header > img
 	float:left;
    
     padding-left: 10px;
-   
-    background-color: #ECF0F5;
-    -webkit-border-top-left-radius: 2px;
+   	border : 1px solid #DDD;
+    background-color: #EEE;
+    -webkit-border-top-left-radius: 5px;
     -webkit-border-bottom-left-radius: 5px;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-bottomleft: 5px;
@@ -58,6 +55,8 @@ header > img
     -moz-border-radius-bottomright: 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    
+    position:relative;
     
     width: 400px;
 }
