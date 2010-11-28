@@ -1,14 +1,16 @@
 ﻿
 namespace LinqExtender.Ast
 {
+    /// <summary>
+    /// Reprensents Logical blocks.
+    /// </summary>
     public class LogicalExpression : Expression
     {
-        private LogicalOperator @operator;
-        private bool isChild;
-        private Expression left;
-        private Expression right;
-
-        public LogicalExpression(LogicalOperator @operator)
+        /// <summary>
+        /// Intializes a new instance of the <see cref="LogicalExpression"/> class.
+        /// </summary>
+        /// <param name="@operator">Logical operator</param>
+        internal LogicalExpression(LogicalOperator @operator)
         {
             this.@operator = @operator;
         }
@@ -73,5 +75,10 @@ namespace LinqExtender.Ast
         {
             get { return CodeType.LogicalExpression; }
         }
+
+        private readonly LogicalOperator @operator;
+        private bool isChild;
+        private Expression left;
+        private Expression right;
     }
 }

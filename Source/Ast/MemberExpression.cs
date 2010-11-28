@@ -3,6 +3,9 @@ using System.Reflection;
 
 namespace LinqExtender.Ast
 {
+    /// <summary>
+    /// Represents query members
+    /// </summary>
     public class MemberExpression : Expression
     {
         /// <summary>

@@ -6,7 +6,7 @@ using System.Text;
 namespace LinqExtender.Ast
 {
     /// <summary>
-    /// Abstract base expression class that represents the LINQ query.
+    /// Abstract expression base that represents the LINQ query.
     /// </summary>
     public abstract class Expression 
     {

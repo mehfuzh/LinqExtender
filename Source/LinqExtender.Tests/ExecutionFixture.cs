@@ -10,7 +10,7 @@ namespace LinqExtender.Tests
     public class ExecutionFixture
     {
         [Test]
-        public void ShouldAssertResultAgainstContextWithPreDefinedStore()
+        public void ShouldAssertExpectedResultFromGivenContext()
         {
             var query = from book in new FakeContext(GetBooks())
                         where book.Id == 2

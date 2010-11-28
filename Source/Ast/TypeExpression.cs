@@ -5,6 +5,9 @@ using System.Text;
 
 namespace LinqExtender.Ast
 {
+    /// <summary>
+    /// Represents the target type.
+    /// </summary>
     public class TypeExpression : Expression
     {
         /// <summary>

@@ -98,7 +98,7 @@ namespace LinqExtender
                     {
                         object value = prop.GetValue(source, null);
 
-                        PropertyInfo destProp = destType.GetProperty(prop.Name);
+                        var destProp = destType.GetProperty(prop.Name);
 
                         object destValue = destProp.GetValue(destination, null);
 
@@ -118,9 +118,11 @@ namespace LinqExtender
                                     destProp.SetValue(destination, destValue, null);
                                 }
                             }
-                            catch
+                            catch(Exception ex)
                             {
-                                // skip
+                                #if DEBUG
+                                    System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                                #endif
                             }
                         }
                     }

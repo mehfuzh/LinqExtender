@@ -5,6 +5,9 @@ using System.Text;
 
 namespace LinqExtender.Ast
 {
+    /// <summary>
+    /// Represents order by query.
+    /// </summary>
     public class OrderbyExpression : Ast.Expression
     {
         /// <summary>
