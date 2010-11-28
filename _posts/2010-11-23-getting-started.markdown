@@ -200,7 +200,7 @@ Here one interesting thing, we may want to include the grouping parenthesis only
 
 	private void WriteTokenIfReq(Ast.LogicalExpression expression, Token token)
 	{
-		if (**expression.IsChild**)
+		if (expression.IsChild)
 		{
 		    WriteToken(token);
 		}
@@ -225,9 +225,9 @@ This leads to the Member and Value parsing. In this case, we dont have the contr
 	...
 	etc
 
-However, we dont have to bother how as in LinqExtender BinaryExpression.Left will either be BinaryExpression or MemberExpression and BinaryExpression.Right will either be BinaryExpression or LiteralExpression. Since, it internally handled.
+However, we dont have to bother how as in LinqExtender BinaryExpression.Left will either be BinaryExpression or MemberExpression and BinaryExpression.Right will either be BinaryExpression or LiteralExpression. Since, it is internally handled.
 
-In the sample provider, I overriden `VisitMemberExpression` to simply print the member:
+In the sample provider, I have overriden `VisitMemberExpression` to simply print the member name:
 
 	public override Ast.Expression VisitMemberExpression(Ast.MemberExpression expression)
 	{
@@ -237,7 +237,7 @@ In the sample provider, I overriden `VisitMemberExpression` to simply print the 
 
 Here to include i am printing the full member name includeing that includes typename (of course the NameAttribute will be applied here as well).
 
-However, `MemberExpression` class contains other accessors and methods that can be useful in more complex scenarios:
+Despite, `MemberExpression` class contains other accessors and methods that can be useful in more complex scenarios:
 
 	MemberEpxression
 		Name 
@@ -255,10 +255,10 @@ Over to getting started, final step is to print value aginst `VisitLiteralExpres
 		return expression;
 	}
  	
-Here, `expression.Type` referes to the TypeReference of value or member type from where caluse.
+Here, `expression.Type` referes to the TypeReference of value or member type that is compared.
 
 
-Once the query is run it will print the output:
+Once the test code at the begining is run it will print the following output:
 	
 	select * from Book
 	where
