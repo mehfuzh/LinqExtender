@@ -100,7 +100,7 @@ namespace LinqExtender.Fluent
             /// <summary>
             /// Callback handler for <see cref="FluentOrderBy"/>
             /// </summary>
-            /// <param name="field">field name</param>
+            /// <param name="member">Target member</param>
             /// <param name="ascending">bool for sort order</param>
             public delegate void Callback(MemberReference member, bool ascending);
             private readonly IBucket bucket;
@@ -114,7 +114,6 @@ namespace LinqExtender.Fluent
                 /// Creates a new instance of <see cref="FluentOrderBy"/>
                 /// </summary>
                 /// <param name="bucket"></param>
-                /// <param name="ifUsed">Defines if a order by is used.</param>
                 internal FluentOrderByItem(IBucket bucket)
                 {
                     this.bucket = bucket;

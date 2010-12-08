@@ -93,7 +93,10 @@
     <EmbeddedResource Include="Cases\ShouldAssertPropertyNameAsSpeficiedInNameAttribute.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Cases\ShouldConcatMultipleWhereCallsWithAndOperator.txt" />
+    <EmbeddedResource Include="Cases\ShouldConcatMultipleWhereCallsWithLogicalAnd.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Cases\ShouldJoinWhereUsingAndWhenNextCallHavingLogicalExpr.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

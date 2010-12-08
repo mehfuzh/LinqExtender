@@ -161,6 +161,22 @@ namespace LinqExtender.Tests
             Assert.AreEqual(ReadExpected(), ReadSource(builder));
         }
 
+        [Test]
+        public void ShouldJoinWhereUsingAndWhenNextCallHavingLogicalExpr()
+        {
+            var builder = new StringBuilder();
+            var context = new TextContext<Book>(new StringWriter(builder));
+
+            var query = context
+                .Where(x => x.ISBN == "111")
+                .Where(x => x.Id == 1 || x.Author == "Scott" || x.IsAvailable == true);
+
+
+            query.FirstOrDefault();
+
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+        }
+
 
         private string GetAuthorName()
         {

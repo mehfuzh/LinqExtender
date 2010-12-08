@@ -6,6 +6,9 @@ using LinqExtender.Attributes;
 
 namespace LinqExtender
 {
+    /// <summary>
+    /// Wrapper over a system type.
+    /// </summary>
     public class TypeReference
     {
         internal TypeReference(Type targetType)

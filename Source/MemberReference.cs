@@ -7,6 +7,9 @@ using LinqExtender.Attributes;
 
 namespace LinqExtender
 {
+    /// <summary>
+    /// Wraps and extends the <see cref="MemberInfo"/> instance.
+    /// </summary>
     public class MemberReference
     {
         internal MemberReference(MemberInfo memberInfo)

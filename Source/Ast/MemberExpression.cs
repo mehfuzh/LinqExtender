@@ -58,7 +58,7 @@ namespace LinqExtender.Ast
         {
             get
             {
-                return this.item.DeclaringObjectType;
+                return this.item.DeclaringType;
             }
         }
 
@@ -70,6 +70,9 @@ namespace LinqExtender.Ast
             return (T)item.FindAttribute(typeof(T));
         }
 
+        /// <summary>
+        /// Gets the type of the expression.
+        /// </summary>
         public override CodeType CodeType
         {
             get { return CodeType.MemberExpression; }

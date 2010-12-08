@@ -22,7 +22,7 @@ namespace LinqExtender
             }
         }
         /// <summary>
-        /// Builds a dynamic assembly with <see cref="AssemblyBuilderAccess.RunAndSave"/> mode.
+        /// Builds dynamic assembly.
         /// </summary>
         /// <returns></returns>
         public IClassGenerator BuildDynamicAssembly()

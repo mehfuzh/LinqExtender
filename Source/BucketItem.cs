@@ -12,20 +12,20 @@ namespace LinqExtender
     public class BucketItem : IContainer
     {
         /// <summary>
-        /// Default constructor for <see cref="BucketItem"/>
+        /// Initializes a new instance of the <see cref="BucketItem"/> class.
         /// </summary>
         public BucketItem()
         {
-            // just for testing purpose and null case
+            // intentionally left blank.
         }
 
         /// <summary>
-        /// Gets/ Sets the container.
+        /// Gets or sets the container.
         /// </summary>
         public IContainer Container { get; set; }
     
         /// <summary>
-        /// Contains any Nested <see cref="BucketItem"/>
+        /// Get or sets the child.
         /// </summary>
         public Bucket Child { get; set; }
      
@@ -46,7 +46,7 @@ namespace LinqExtender
             }
 
             /// <summary>
-            /// Gets the value of the query entry
+            /// Gets the query item value.
             /// </summary>
             public object Value
             {
@@ -99,7 +99,7 @@ namespace LinqExtender
         /// <param name="queryVisible">Marks that it is to be used in query expression</param>
         internal BucketItem(Type underlyingType, string name, string propertyName, Type propertyType, object value, bool unique, BinaryOperator queryOperator, bool queryVisible)
         {
-            this.underlyingType = underlyingType;
+            this.declaringType = underlyingType;
             // new condtions
             Values.Clear();
 
@@ -298,22 +298,24 @@ namespace LinqExtender
         /// Determines if the item is not maked to be Ignored by <c>IgnoreAttribute</c>
         /// </summary>
         internal bool Visible { get; set; }
+        
         /// <summary>
-        /// Gets/sets if an item is already visited.
+        /// Gets or sets a value indicating if an item is already visited.
         /// </summary>
         internal bool IsVisited { get; set; }
+        
         /// <summary>
         /// Gets the underlying object type.
         /// </summary>
-        public Type DeclaringObjectType
+        public Type DeclaringType
         {
             get
             {
-                return underlyingType;
+                return declaringType;
             }
             internal set
             {
-                underlyingType = value;
+                declaringType = value;
             }
         }
 
@@ -325,7 +327,7 @@ namespace LinqExtender
         /// <returns></returns>
         public void SetValue(object target, object value)
         {
-            PropertyInfo info = target.GetType().GetProperty(ProperyName, this.propertyType);
+            var info = target.GetType().GetProperty(ProperyName, this.propertyType);
             if (info != null) info.SetValue(target, value, null);
         }
 
@@ -335,7 +337,7 @@ namespace LinqExtender
         /// <param name="target"></param>
         public object GetValue(object target)
         {
-            PropertyInfo info = target.GetType().GetProperty(ProperyName, this.propertyType);
+            var info = target.GetType().GetProperty(ProperyName, this.propertyType);
             return info.GetValue(target, null);
         }
 
@@ -346,7 +348,7 @@ namespace LinqExtender
         /// <returns></returns>
         public object FindAttribute(Type type)
         {
-            PropertyInfo info = underlyingType.GetProperty(ProperyName, this.propertyType);
+            var info = declaringType.GetProperty(ProperyName, this.propertyType);
 
             if (info != null)
             {
@@ -418,7 +420,7 @@ namespace LinqExtender
                 }
                 else
                 {
-                    containerName = containerName.TrimEnd(new []{ '.' }) + "." + container.Name;
+                    containerName = String.Format("{0}.{1}", containerName.TrimEnd(new[] { '.' }), container.Name);
                 }
             }
             else
@@ -477,7 +479,7 @@ namespace LinqExtender
 
        
         private bool unique;
-        private Type underlyingType;
+        private Type declaringType;
         private Type propertyType;
         private IDictionary<string, BucketItem> children;
         private string name;

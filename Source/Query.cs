@@ -12,7 +12,7 @@ namespace LinqExtender
     ///<summary>
     /// Entry class for LINQ provider. Containter of the virtual methods that will be invoked on select, intsert, update, remove or get calls.
     ///</summary>
-    public class Query<T> : ExpressionVisitor, IModifiableCollection<T>, IOrderedQueryable<T>, IDisposable, IQueryProvider, IQueryContext<T>
+    public class Query<T> : ExpressionVisitor, IModifiableCollection<T>, IOrderedQueryable<T>, IDisposable, IQueryProvider
     {
         /// <summary>
         /// Creates a new instance of <see cref="Query{T}"/> class.
@@ -114,11 +114,11 @@ namespace LinqExtender
                 }
 
                 // Create a new bucket when Query<T>.Execute is called or it is empty for current type.
-                if ((!Buckets.ContainsKey(typeof(T).FullName)) || Buckets.Current.IsAlreadyProcessed)
+                if ((!Buckets.ContainsKey(typeof(T))) || Buckets.Current.Processed)
                 {
-                    Buckets.Current = BucketImpl<T>.NewInstance.Describe();
+                    Buckets.Current = BucketImpl<T>.NewInstance.Init();
                 }
-
+               
                 this.Visit(curentMethodcall);
             }
 
@@ -176,6 +176,7 @@ namespace LinqExtender
 
                 Type itemGenericType = typeof(IMethodCall<T>);
                 Type itemNonGenericType = typeof(IMethodCall);
+
                 if (mCallExp.Method.ReturnType == typeof(T))
                 {
                     return Utility.InvokeMethod(methodName, itemGenericType, this);
@@ -409,7 +410,7 @@ namespace LinqExtender
         {
             var queryColleciton = (QueryCollection<T>)collection;
 
-            var bucket = BucketImpl<T>.NewInstance.Describe();
+            var bucket = BucketImpl<T>.NewInstance.Init();
 
             var deletedItems = new List<QueryObject<T>>();
 
@@ -505,6 +506,7 @@ namespace LinqExtender
             }
 
             bool singleOrExtensionCall = false;
+
             // for extension and single item call.
             if (Buckets.Current.SyntaxStack.Count == 0)
             {
@@ -603,10 +605,13 @@ namespace LinqExtender
         /// <returns>Result expression</returns>
         public override Expression VisitMethodCall(MethodCallExpression expression)
         {
-            parent = null;
-            level = 0;
-
             string methodName = expression.Method.Name;
+
+            if (methodName != MethodNames.Where)
+            {
+                parent = null;
+                level = 0;
+            }
 
             if (methodName == MethodNames.Orderby || methodName == MethodNames.Orderbydesc || methodName == MethodNames.ThenBy)
             {
@@ -691,12 +696,12 @@ namespace LinqExtender
         }
 
 
-        private BucketImpls<T> Buckets
+        private Buckets<T> Buckets
         {
             get
             {
                 if (queryObjects == null)
-                    queryObjects = new BucketImpls<T>();
+                    queryObjects = new Buckets<T>();
                 return queryObjects;
             }
         }
@@ -802,7 +807,7 @@ namespace LinqExtender
                         {
                             var leafItem = new BucketItem
                             {
-                                DeclaringObjectType = memberExpression.Member.DeclaringType,
+                                DeclaringType = memberExpression.Member.DeclaringType,
                                 Name = bucketImpl.Items[memberName].Name,
                                 ProperyName = bucketImpl.Items[memberName].ProperyName,
                                 PropertyType = bucketImpl.Items[memberName].PropertyType,
@@ -980,7 +985,7 @@ namespace LinqExtender
                 {
                     if (current.Items[parts[index]].Child == null)
                     {
-                        current.Items[parts[index]].Child = BucketImpl.NewInstance(propertyType).Describe();
+                        current.Items[parts[index]].Child = BucketImpl.NewInstance(propertyType).Init();
                         current.Items[parts[index]].Child.Container = current.Items[parts[index]];
                     }
                     // move on.
@@ -1012,7 +1017,7 @@ namespace LinqExtender
 
                 leafItem = new BucketItem
                 {
-                    DeclaringObjectType = i.DeclaringObjectType,
+                    DeclaringType = i.DeclaringType,
                     Name = i.Name,
                     ProperyName = i.ProperyName,
                     PropertyType = info.PropertyType,
@@ -1031,7 +1036,7 @@ namespace LinqExtender
 
                 leafItem = new BucketItem
                 {
-                    DeclaringObjectType = item.DeclaringObjectType,
+                    DeclaringType = item.DeclaringType,
                     Name = item.Name,
                     ProperyName = item.ProperyName,
                     PropertyType = info.PropertyType,
@@ -1069,7 +1074,7 @@ namespace LinqExtender
 
         private void ProcessItem(BucketImpl item)
         {
-            if (!item.IsAlreadyProcessed)
+            if (!item.Processed)
             {
                 try
                 {
@@ -1106,18 +1111,9 @@ namespace LinqExtender
                 {
                     throw new ProviderException(Messages.ErrorWhileExecutingTheQuery, ex);
                 }
-                item.IsAlreadyProcessed = true;
+                item.Processed = true;
             }
         }
-
-        #region IQueryContext<T> Members
-
-        IEnumerable<T> IQueryContext<T>.Execute(Ast.Expression exprssion)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
 
         internal class OrderbyVisitor : ExpressionVisitor
         {
@@ -1167,7 +1163,7 @@ namespace LinqExtender
         private int level;
 
         private Expression currentExpression;
-        private BucketImpls<T> queryObjects;
+        private Buckets<T> queryObjects;
         private readonly T defaultItem = (T)Activator.CreateInstance(typeof(T));
         private readonly IModifiableCollection<T> collection;
         private object projectedQuery;

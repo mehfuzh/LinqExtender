@@ -1,12 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LinqExtender.Ast
 {
+    /// <summary>
+    /// Defines lambda expression.
+    /// </summary>
     public class LambdaExpression : Expression 
     {
+        /// <summary>
+        /// Initailizes a new instance of the <see cref="LambdaExpression"/> class.
+        /// </summary>
+        /// <param name="type">Target object type.</param>
         public LambdaExpression(Type type)
         {
             this.type = type;
@@ -38,6 +42,9 @@ namespace LinqExtender.Ast
             }
         }
 
+        /// <summary>
+        /// Gets the type of the expression.
+        /// </summary>
         public override CodeType CodeType
         {
             get { return CodeType.LambdaExpresion; }

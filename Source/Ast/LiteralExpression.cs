@@ -5,19 +5,20 @@ using System.Text;
 
 namespace LinqExtender.Ast
 {
+    /// <summary>
+    /// Represents the extracted value of a query item.
+    /// </summary>
     public class LiteralExpression : Expression
     {
-        private object value;
-        private TypeReference type;
-
-        public LiteralExpression(Type type, object value)
+        
+        internal LiteralExpression(Type type, object value)
         {
             this.type = new TypeReference(type);
             this.value = value;
         }
 
         /// <summary>
-        /// Gets type of the expression.
+        /// Gets the target type.
         /// </summary>
         public TypeReference Type
         {
@@ -38,9 +39,15 @@ namespace LinqExtender.Ast
             }
         }
 
+        /// <summary>
+        /// Gets the type of the expression.
+        /// </summary>
         public override CodeType CodeType
         {
             get { return CodeType.LiteralExpression; }
         }
+
+        private object value;
+        private TypeReference type;
     }
 }

@@ -29,7 +29,7 @@ namespace LinqExtender.Fluent
         /// Describes the container for which the expression tree will be evaluated.
         /// </summary>
         /// <typeparam name="T">Type of the reference.</typeparam>
-        /// <param name="reference"></param>
+        /// <param name="container">Target container</param>
         /// <returns></returns>
         public FluentExpressionTree<T> DescribeContainerAs<T>(T container)
         {

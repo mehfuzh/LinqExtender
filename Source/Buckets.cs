@@ -1,32 +1,33 @@
+using System;
 using System.Collections.Generic;
 
 namespace LinqExtender
 {
-    internal class BucketImpls<T> : Dictionary<string, BucketImpl>
+    internal class Buckets<T> : Dictionary<Type, BucketImpl>
     {
         public BucketImpl Current
         {
             get
             {
-                EnsureWorkingItem(typeof(T).FullName);
+                Ensure(typeof(T));
                 return current;
             }
             set
             {
-                this[typeof (T).FullName] = value; 
+                this[typeof (T)] = value; 
             }
         }
 
-        private void EnsureWorkingItem(string currentKey)
+        private void Ensure(Type targetType)
         {
-            if (this.ContainsKey(currentKey))
+            if (this.ContainsKey(targetType))
             {
                 // set the current object.
-                current = this[currentKey].InstanceImpl;
+                current = this[targetType].InstanceImpl;
             }
         }
 
         private BucketImpl current = null;
-    
+  
     }
 }

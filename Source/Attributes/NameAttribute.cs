@@ -11,14 +11,6 @@ namespace LinqExtender.Attributes
         /// <summary>
         /// Initalizes a new instance of the <see cref="NameAttribute"/> class.
         /// </summary>
-        protected NameAttribute()
-        {
-
-        }
-
-        /// <summary>
-        /// Initalizes a new instance of the <see cref="NameAttribute"/> class.
-        /// </summary>
         /// <param name="targetName">Name of the reflected object.</param>
         public NameAttribute(string targetName)
         {

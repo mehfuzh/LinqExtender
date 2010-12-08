@@ -71,6 +71,9 @@ namespace LinqExtender.Ast
             }
         }
 
+        /// <summary>
+        /// Gets the type of the expression.
+        /// </summary>
         public override CodeType CodeType
         {
             get { return CodeType.LogicalExpression; }

@@ -10,12 +10,6 @@ namespace LinqExtender
     public class Bucket : IBucket, IContainer
     {
         /// <summary>
-        /// Creates a default Bucket object, with self reference.
-        /// </summary>
-        public Bucket()
-        {
-        }
-        /// <summary>
         /// Gets/ sets the name of the container.
         /// </summary>
         public IContainer Container { get; internal set; }

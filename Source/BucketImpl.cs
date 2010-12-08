@@ -8,14 +8,8 @@ namespace LinqExtender
 {
     internal class BucketImpl : Bucket
     {
-
         /// <summary>
-        /// Creates a new instance of <see cref="BucketImpl"/> class.
-        /// </summary>
-        public BucketImpl() { }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="BucketImpl"/> class.
+        /// Initializes a new instance of the <see cref="BucketImpl"/> class.
         /// </summary>
         /// <param name="targetType"></param>
         public BucketImpl(Type targetType)
@@ -27,10 +21,12 @@ namespace LinqExtender
         {
             return new BucketImpl(targetType);
         }
+
         /// <summary>
         /// marks if the bucket is already prepared or not.
         /// </summary>
-        internal bool IsAlreadyProcessed { get; set; }
+        internal bool Processed { get; set; }
+        
         /// <summary>
         /// internal use : to check if the bucket object should be sorted in asc or dsc
         /// </summary>
@@ -40,17 +36,19 @@ namespace LinqExtender
         /// Defines the current expression node.
         /// </summary>
         internal ExpressionType CurrentExpessionType { get; set; }
+        
         /// <summary>
         /// number of items queried in <c>Where</c> caluse
         /// </summary>
         internal int ClauseItemCount { get; set; }
+        
         /// <summary>
         /// gets the Level of the clause item
         /// </summary>
         internal int Level { get; set; }
 
         
-        internal BucketImpl Describe()
+        internal BucketImpl Init()
         {
             object[] attr = targetType.GetCustomAttributes(typeof(NameAttribute), true);
             if (attr.Length > 0)
@@ -139,7 +137,7 @@ namespace LinqExtender
 
             ClauseItemCount = 0;
             CurrentExpessionType = ExpressionType.Equal;
-            IsAlreadyProcessed = false;
+            Processed = false;
         }
 
 

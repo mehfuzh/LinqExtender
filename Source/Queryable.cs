@@ -38,14 +38,9 @@ namespace LinqExtender
             Expression<Func<TInner, TKey>> innerKeySelector, 
             Expression<Func<TOuter, TInner, TResult>> resultSelector){
 
-            return null;
+                throw new NotImplementedException("Not yet implemented");
         }
 
-
-        public static IEnumerable<TSource> Intersect<TSource>(this IQueryContext<TSource> first, IEnumerable<TSource> second)
-        {
-            return null;
-        }
 
         private static IQueryable<TResult> CreateQuery<TSource, TResult, TDelegate>(IQueryContext<TSource> source,
             MethodInfo methodInfo, 
@@ -100,8 +95,6 @@ namespace LinqExtender
             return providers[source];
 
         }
-
-        private static IQueryProvider provider;
 
         [ThreadStatic]
         static IDictionary<object, IQueryProvider> providers = new Dictionary<object, IQueryProvider>();

@@ -126,11 +126,11 @@
     <Compile Include="..\BucketImpl.cs">
       <Link>BucketImpl.cs</Link>
     </Compile>
-    <Compile Include="..\BucketImpls.cs">
-      <Link>BucketImpls.cs</Link>
-    </Compile>
     <Compile Include="..\BucketItem.cs">
       <Link>BucketItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Buckets.cs">
+      <Link>Buckets.cs</Link>
     </Compile>
     <Compile Include="..\ClassGenerator.cs">
       <Link>ClassGenerator.cs</Link>

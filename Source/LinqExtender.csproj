@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -84,7 +84,7 @@
     <Compile Include="Attributes\IgnoreAttribute.cs" />
     <Compile Include="Bucket.cs" />
     <Compile Include="BucketImpl.cs" />
-    <Compile Include="BucketImpls.cs" />
+    <Compile Include="Buckets.cs" />
     <Compile Include="BucketItem.cs" />
     <Compile Include="ClassGenerator.cs" />
     <Compile Include="Collection\ReadOnlyQueryCollection.cs" />

@@ -14,7 +14,7 @@ namespace LinqExtender
         /// Initializes a new instance of the <see cref="ProjectedQuery{T,S}"/> class.
         /// </summary>
         /// <param name="expression">The expression.</param>
-        /// <param name="query">The query.</param>
+        /// <param name="parent">The query.</param>
         public ProjectedQuery(Expression expression, Query<T> parent)
         {
             this.expression = expression;
@@ -63,7 +63,7 @@ namespace LinqExtender
             {
                 ((Expression<Func<T, S>>)lambda).Compile();
             }
-            catch (Exception ex)
+            catch
             {
                 // do nothing for now.
             }
@@ -81,7 +81,6 @@ namespace LinqExtender
         {
             return (this as IEnumerable<S>).GetEnumerator();
         }
-
 
 
         #endregion
@@ -148,7 +147,7 @@ namespace LinqExtender
 
             if (expression is MethodCallExpression)
             {
-                MethodCallExpression mCallExp = (MethodCallExpression)expression;
+                var mCallExp = (MethodCallExpression)expression;
                 // when first , last or single is called 
                 string methodName = mCallExp.Method.Name;
 
