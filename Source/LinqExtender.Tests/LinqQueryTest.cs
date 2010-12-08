@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using System;
 
 namespace LinqExtender.Tests
 {
@@ -18,7 +19,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
         }
 
         [Test]
@@ -33,7 +34,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
         }
 
         [Test]
@@ -49,7 +50,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
 
         }
 
@@ -67,7 +68,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
         }
 
         [Test]
@@ -83,7 +84,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
         }
 
         [Test]
@@ -99,7 +100,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
         }
 
         [Test]
@@ -114,7 +115,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
         }
 
         [Test]
@@ -129,7 +130,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
         }
 
         [Test]
@@ -144,8 +145,22 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadTestCase(), RemoveEscape(builder));
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
         }
+
+        [Test]
+        public void ShouldConcatMultipleWhereCallsWithLogicalAnd()
+        {
+            var builder = new StringBuilder();
+            var context = new TextContext<Book>(new StringWriter(builder));
+
+            var query = context.Where(x => x.Id == 1).Where(x => x.Author == "Scott");
+
+            query.FirstOrDefault();
+
+            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+        }
+
 
         private string GetAuthorName()
         {

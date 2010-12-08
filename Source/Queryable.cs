@@ -27,9 +27,24 @@ namespace LinqExtender
 
         public static IQueryable<TSource> OrderByDescending<TSource, TKey>(this IQueryContext<TSource> source, Expression<Func<TSource, TKey>> keySelector)
         {
-            MethodInfo currentMethod = (MethodInfo)MethodInfo.GetCurrentMethod();
+            var currentMethod = (MethodInfo)MethodInfo.GetCurrentMethod();
             var args = new[] { typeof(TSource), typeof(TKey) };
             return CreateQuery<TSource, TSource, Func<TSource, TKey>>(source, currentMethod, keySelector, args);
+        }
+
+        public static IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(this IQueryContext<TOuter> outer, 
+            IQueryContext<TInner> inner, 
+            Expression<Func<TOuter, TKey>> outerKeySelector, 
+            Expression<Func<TInner, TKey>> innerKeySelector, 
+            Expression<Func<TOuter, TInner, TResult>> resultSelector){
+
+            return null;
+        }
+
+
+        public static IEnumerable<TSource> Intersect<TSource>(this IQueryContext<TSource> first, IEnumerable<TSource> second)
+        {
+            return null;
         }
 
         private static IQueryable<TResult> CreateQuery<TSource, TResult, TDelegate>(IQueryContext<TSource> source,
