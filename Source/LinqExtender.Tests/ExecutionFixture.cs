@@ -19,6 +19,16 @@ namespace LinqExtender.Tests
             Assert.AreEqual(2, query.First().Id);
         }
 
+        [Test]
+        public void ShouldAssertProjectionSelect()
+        {
+            var query = new FakeContext(GetBooks())
+                .Where(book => book.Id == 2)
+                .Select(r => new { r.Id, r.Title });
+       
+            Assert.AreEqual(2, query.First().Id);
+        }
+
         internal class FakeContext : ExpressionVisitor,  IQueryContext<Book>
         {
             internal FakeContext(IList<Book> source)

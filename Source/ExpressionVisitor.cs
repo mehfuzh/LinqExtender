@@ -69,6 +69,8 @@ namespace LinqExtender
                     return this.VisitMemberAccess((MemberExpression)expression);
                 case ExpressionType.Parameter:
                     return this.VisitParameter((ParameterExpression)expression);
+                case ExpressionType.New:
+                    return this.VisitNew((NewExpression)expression);
         
             }
             throw new ArgumentOutOfRangeException("expression", expression.NodeType.ToString());
@@ -95,13 +97,13 @@ namespace LinqExtender
         }
 
         /// <summary>
-        /// Visits the method call expression. To be implemented by user.
+        /// Visits the method call expression.
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
         public virtual Expression VisitMethodCall(MethodCallExpression expression)
         {
-            throw new NotImplementedException();
+            return expression;
         }
 
         /// <summary>
@@ -128,7 +130,7 @@ namespace LinqExtender
         }
 
         /// <summary>
-        /// Visits the lamda expression.
+        /// Visits the lambda expression.
         /// </summary>
         /// <param name="lambdaExpression"></param>
         /// <returns></returns>
@@ -138,7 +140,18 @@ namespace LinqExtender
             return lambdaExpression;
         }
 
+        /// <summary>
+        /// Visits the parameter
+        /// </summary>
         private Expression VisitParameter(ParameterExpression expression)
+        {
+            return expression;
+        }
+
+        /// <summary>
+        /// Visits the new type expression.
+        /// </summary>
+        public virtual Expression VisitNew(NewExpression expression)
         {
             return expression;
         }

@@ -35,14 +35,11 @@ namespace LinqExtender
             return Items.GetEnumerator();
         }
 
-
         public override Expression VisitMethodCall(MethodCallExpression expression)
         {
             foreach (var exp in expression.Arguments)
-            {
-                this.Visit(exp);
-            }
-
+                  this.Visit(exp);
+       
             return expression;
         }
 

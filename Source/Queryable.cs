@@ -32,6 +32,7 @@ namespace LinqExtender
             return CreateQuery<TSource, TSource, Func<TSource, TKey>>(source, currentMethod, keySelector, args);
         }
 
+
         public static IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(this IQueryContext<TOuter> outer, 
             IQueryContext<TInner> inner, 
             Expression<Func<TOuter, TKey>> outerKeySelector, 
@@ -68,21 +69,11 @@ namespace LinqExtender
             return GetProvider(source).CreateQuery<TResult>(call);
         }
 
-        public static IQueryable<TResult> Select<TSource, TResult>(this IQueryContext<TSource> source, Expression<Func<TSource, int, TResult>> selector)
-        {
-            return new List<TResult>().AsQueryable();
-        }
-
         public static IQueryable<TResult> Select<TSource, TResult>(this IQueryContext<TSource> source, Expression<Func<TSource, TResult>> selector)
         {
             MethodInfo currentMethod = (MethodInfo)MethodInfo.GetCurrentMethod();
             var args = new[] { typeof(TSource), typeof(TResult) };
             return CreateQuery<TSource, TResult, Func<TSource, TResult>>(source, currentMethod, selector, args) as IQueryable<TResult>;
-        }
-
-        public static IQueryable<TResult> Select<TSource, TResult>(this IQueryable<TSource> source, Expression<Func<TSource, TResult>> selector)
-        {
-            return Select<TSource, TResult>((IQueryContext<TSource>)source, selector);
         }
 
         private static IQueryProvider GetProvider<TSource>(IQueryContext<TSource> source)

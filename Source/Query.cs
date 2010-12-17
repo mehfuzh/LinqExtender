@@ -278,7 +278,6 @@ namespace LinqExtender
 
         #endregion
 
-
         #region IDisposable Members
 
         void IDisposable.Dispose()
@@ -383,14 +382,7 @@ namespace LinqExtender
             // do nothing.
             return false;
         }
-        /// <summary>
-        /// gets the single item for unique properties.
-        /// </summary>
-        /// <returns></returns>
-        internal virtual T GetItem(IBucket bucket)
-        {
-            return defaultItem;
-        }
+     
         /// <summary>
         /// Called by the extender for select queries.
         /// </summary>
@@ -1078,39 +1070,13 @@ namespace LinqExtender
             {
                 try
                 {
-                    bool uniqueCall = item.UniqueProperties.Length > 0;
-
-                    foreach (string property in item.UniqueProperties)
-                    {
-                        // check if any of the unique item field is queried.
-                        uniqueCall
-                            &= (item.Items[property].Values.Count == 1 &&
-                                item.Items[property].Operator == BinaryOperator.Equal);
-                    }
-
-                    if (uniqueCall && item.ClauseItemCount == 1)
-                    {
-                        T obj = GetItem(item);
-
-                        if (obj.Equals(defaultItem))
-                        {
-                            // backward compatible
-                            ExecuteQuery(item, this.collection);
-                        }
-                        else
-                        {
-                            this.Add(obj);
-                        }
-                    }
-                    else
-                    {
-                        ExecuteQuery(item, this.collection);
-                    }
+                    ExecuteQuery(item, this.collection);
                 }
                 catch (Exception ex)
                 {
                     throw new ProviderException(Messages.ErrorWhileExecutingTheQuery, ex);
                 }
+
                 item.Processed = true;
             }
         }
@@ -1164,7 +1130,6 @@ namespace LinqExtender
 
         private Expression currentExpression;
         private Buckets<T> queryObjects;
-        private readonly T defaultItem = (T)Activator.CreateInstance(typeof(T));
         private readonly IModifiableCollection<T> collection;
         private object projectedQuery;
     }
