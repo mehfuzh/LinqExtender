@@ -44,6 +44,11 @@ namespace LinqExtender
         /// <summary>
         /// Orderby expression.
         /// </summary>
-        OrderbyExpression
+        OrderbyExpression,
+
+        /// <summary>
+        /// MethodCall Expression
+        /// </summary>
+        MethodCallExpression
     }
 }

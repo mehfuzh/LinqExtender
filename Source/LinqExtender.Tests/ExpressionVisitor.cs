@@ -24,6 +24,8 @@ namespace LinqExtender.Tests
                     return VisitMemberExpression((Ast.MemberExpression)expression);
                 case CodeType.OrderbyExpression:
                     return VisitOrderbyExpression((Ast.OrderbyExpression)expression);
+                case CodeType.MethodCallExpression:
+                    return VisitMethodCallExpression((Ast.MethodCallExpression)expression);
             }
 
             throw new ArgumentException("Expression type is not supported");
@@ -40,6 +42,11 @@ namespace LinqExtender.Tests
                 this.Visit(expression);
 
             return blockExpression;
+        }
+
+        public virtual Ast.Expression VisitMethodCallExpression(Ast.MethodCallExpression methodCallExpression)
+        {
+            return methodCallExpression;
         }
 
         public virtual Ast.Expression VisitLogicalExpression(Ast.LogicalExpression expression)
@@ -78,6 +85,6 @@ namespace LinqExtender.Tests
         {
             return expression;
         }
-  
+
     }
 }

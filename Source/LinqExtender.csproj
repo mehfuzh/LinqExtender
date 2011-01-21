@@ -74,6 +74,7 @@
     <Compile Include="Ast\LiteralExpression.cs" />
     <Compile Include="Ast\LogicalExpression.cs" />
     <Compile Include="Ast\MemberExpression.cs" />
+    <Compile Include="Ast\MethodCallExpression.cs" />
     <Compile Include="Ast\OrderbyExpression.cs" />
     <Compile Include="Ast\TypeExpression.cs" />
     <Compile Include="Ast\BinaryExpression.cs" />
