@@ -102,6 +102,9 @@
     <Compile Include="..\Ast\MemberExpression.cs">
       <Link>Ast\MemberExpression.cs</Link>
     </Compile>
+    <Compile Include="..\Ast\MethodCallExpression.cs">
+      <Link>Ast\MethodCallExpression.cs</Link>
+    </Compile>
     <Compile Include="..\Ast\OrderbyExpression.cs">
       <Link>Ast\OrderbyExpression.cs</Link>
     </Compile>
