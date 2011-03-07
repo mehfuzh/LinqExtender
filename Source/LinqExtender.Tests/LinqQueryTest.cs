@@ -19,7 +19,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
 
         }
 
@@ -68,7 +68,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace LinqExtender.Tests
 
             query.Count();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
         [Test]
@@ -140,12 +140,12 @@ namespace LinqExtender.Tests
             var context = new TextContext<Book>(new StringWriter(builder));
 
             var query = from book in context
-                        where book.Author == GetAuthorName()
+                        where book.Author == GetAuthor(1)
                         select book;
 
             query.Count();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
         [Test]
@@ -158,7 +158,7 @@ namespace LinqExtender.Tests
 
             query.FirstOrDefault();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
         [Test]
@@ -169,18 +169,22 @@ namespace LinqExtender.Tests
 
             var query = context
                 .Where(x => x.ISBN == "111")
-                .Where(x => x.Id == 1 || x.Author == "Scott" || x.IsAvailable == true);
+                .Where(x => x.Id == 1 || x.Author == "Scott" || x.IsAvailable);
 
 
             query.FirstOrDefault();
 
-            Assert.AreEqual(ReadExpected(), ReadSource(builder));
+            Assert.AreEqual(Expected(), Source(builder));
         }
 
-
-        private string GetAuthorName()
+        // Fake method to test the capability of using
+        // method call in the query.
+        private string GetAuthor(int bookId)
         {
-            return "Tom";
+            if (bookId > 0)
+                return "Tom";
+
+            throw new ArgumentException("Not a valid book id");
         }
     }
 }

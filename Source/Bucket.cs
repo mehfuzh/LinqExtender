@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using LinqExtender.Abstraction;
+using System;
+using System.Reflection;
+using System.Linq.Expressions;
 
 namespace LinqExtender
 {
@@ -100,6 +103,20 @@ namespace LinqExtender
         {
             get; set;
         }
+
+        /// <summary>
+        /// Gets a list of methods executed on the query.
+        /// </summary>
+        public IList<MethodCall> Methods
+        {
+            get
+            {
+                if (methods == null)
+                    methods = new List<MethodCall>();
+
+                return methods;
+            }
+        }
       
         /// <summary>
         /// The Filled up with query order by information.
@@ -186,7 +203,6 @@ namespace LinqExtender
             }
         }
 
-       
         /// <summary>
         /// Clears out any used properties.
         /// </summary>
@@ -199,6 +215,7 @@ namespace LinqExtender
         }
 
         private string name = string.Empty;
+        private static IList<MethodCall> methods;
         private string[] uniqueItemNames;
         private string[] uniquePropertyNames;
         private IDictionary<string, BucketItem> items;

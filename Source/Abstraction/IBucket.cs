@@ -33,6 +33,11 @@ namespace LinqExtender.Abstraction
         IDictionary<string, BucketItem> Items { get;}
 
         /// <summary>
+        /// Gets a list of methods executed on the query.
+        /// </summary>
+        IList<MethodCall> Methods { get; }
+
+        /// <summary>
         /// Gets the order by information set in query.
         /// </summary>
         IList<Bucket.OrderByInfo> OrderByItems { get; }

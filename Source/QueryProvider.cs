@@ -83,11 +83,10 @@ namespace LinqExtender
                 blockExpression.Expressions.Add(new Ast.OrderbyExpression(member, asending));
             }));
 
-            if (fluentBucket.Entity.ItemsToFetch.HasValue && fluentBucket.Entity.ItemsToSkipFromStart > 0)
+            fluentBucket.Method.ForEach((method) =>
             {
-                blockExpression.Expressions.Add(new Ast.MethodCallExpression(fluentBucket.Entity.ItemsToSkipFromStart, fluentBucket.Entity.ItemsToFetch));
-            }
-
+                blockExpression.Expressions.Add(new Ast.MethodCallExpression(method));
+            });
            
             items.AddRange(this.context.Execute(blockExpression));
         }

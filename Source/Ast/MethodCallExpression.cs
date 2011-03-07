@@ -1,20 +1,78 @@
 ﻿
+using System.Reflection;
+
 namespace LinqExtender.Ast
 {
+    /// <summary>
+    /// Defines method calls on the query
+    /// </summary>
     public class MethodCallExpression : Expression
     {
-        internal MethodCallExpression(int skip, int? take)
+        internal MethodCallExpression(MethodCall methodCall)
         {
-            Skip = skip;
-            Take = take;
+            this.methodCall = methodCall;
         }
 
-        public int Skip { get; set; }
-        public int? Take { get; set; }
+        /// <summary>
+        /// Gets the target
+        /// </summary>
+        public object Target
+        {
+            get
+            {
+                return methodCall.Target;
+            }
+        }
+
+        /// <summary>
+        /// Gets the underlying method info.
+        /// </summary>
+        public MethodInfo Method
+        {
+            get
+            {
+                return methodCall.Method;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating that it is a take call.
+        /// </summary>
+        public bool IsTake
+        {
+            get
+            {
+                return methodCall.Method.Name == MethodNames.Take;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating that it is a skip method.
+        /// </summary>
+        public bool IsSkip
+        {
+            get
+            {
+                return methodCall.Method.Name == MethodNames.Skip;
+            }
+        }
+
+        /// <summary>
+        /// Gets the method parameters.
+        /// </summary>
+        public MethodCall.Parameter [] Paramters
+        {
+            get
+            {
+                return methodCall.Parameters;
+            }
+        }
 
         public override CodeType CodeType
         {
             get { return CodeType.MethodCallExpression; }
         }
+
+        private readonly MethodCall methodCall;
     }
 }

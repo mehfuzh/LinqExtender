@@ -29,11 +29,22 @@ namespace LinqExtender.Tests
             Assert.AreEqual(2, query.First().Id);
         }
 
+        [Test]
+        public void ShouldAssertTakeAndSkip()
+        {
+            var query = (from book in new FakeContext(GetBooks())
+                        where book.Id == 2
+                        select book).Take(1).Skip(0);
+
+            Assert.AreEqual(2, query.First().Id);
+        }
+
         internal class FakeContext : ExpressionVisitor,  IQueryContext<Book>
         {
             internal FakeContext(IList<Book> source)
             {
                 this.source = source;
+                this.methodCalls = new List<Ast.MethodCallExpression>();
             }
 
             public IEnumerable<Book> Execute(Ast.Expression expression)
@@ -41,9 +52,27 @@ namespace LinqExtender.Tests
                 this.Visit(expression);
 
                 var lambda = Expression.Lambda(this.expression, new[] { parameter });
-                var func = (Func<Book, bool>) lambda.Compile();
+                var func = (Func<Book, bool>)lambda.Compile();
 
-                return source.Where(func).AsEnumerable();
+                var result =  source.Where(func).AsQueryable();
+
+                foreach (var methodCall in methodCalls)
+                {
+                    var parameters = new Expression[methodCall.Paramters.Length + 1];
+
+                    parameters[0] = Expression.Constant(result);
+
+                    for (int index = 0; index < methodCall.Paramters.Length; index++)
+                    {
+                        parameters[index + 1] = Expression.Constant(methodCall.Paramters[index].Value, methodCall.Paramters[index].Type);
+                    }
+
+                    var exp = Expression.Call(methodCall.Method, parameters);
+
+                    result = (IQueryable<Book>) Expression.Lambda(exp).Compile().DynamicInvoke();
+                }
+
+                return result.AsEnumerable();
             }
 
             public override Ast.Expression VisitTypeExpression(Ast.TypeExpression expression)
@@ -73,15 +102,21 @@ namespace LinqExtender.Tests
                 return expression;
             }
 
-
             public override Ast.Expression VisitLiteralExpression(Ast.LiteralExpression expression)
             {
                 this.expression = Expression.Constant(expression.Value, expression.Type.UnderlyingType);
                 return expression;
             }
 
+            public override Ast.Expression VisitMethodCallExpression(Ast.MethodCallExpression expression)
+            {
+                methodCalls.Add(expression);
+                return expression;
+            }
+
             private readonly IList<Book> source;
             private Expression expression;
+            private IList<Ast.MethodCallExpression> methodCalls;
             private ParameterExpression parameter;
         }
 

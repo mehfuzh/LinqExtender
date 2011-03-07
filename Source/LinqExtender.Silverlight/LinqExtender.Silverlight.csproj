@@ -162,6 +162,9 @@
     <Compile Include="..\Fluent\FluentIterator.cs">
       <Link>Fluent\FluentIterator.cs</Link>
     </Compile>
+    <Compile Include="..\Fluent\FluentMethod.cs">
+      <Link>Fluent\FluentMethod.cs</Link>
+    </Compile>
     <Compile Include="..\IQueryContext.cs">
       <Link>IQueryContext.cs</Link>
     </Compile>
@@ -173,6 +176,9 @@
     </Compile>
     <Compile Include="..\Messages.Designer.cs">
       <Link>Messages.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\MethodCall.cs">
+      <Link>MethodCall.cs</Link>
     </Compile>
     <Compile Include="..\MethodNames.cs">
       <Link>MethodNames.cs</Link>

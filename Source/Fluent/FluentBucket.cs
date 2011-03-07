@@ -1,4 +1,5 @@
 using LinqExtender.Abstraction;
+using System;
 
 namespace LinqExtender.Fluent
 {
@@ -40,6 +41,22 @@ namespace LinqExtender.Fluent
                 return entity;
             }
         }
+
+
+        public FluentMethod Method
+        {
+            get
+            {
+                if (method == null)
+                {
+                    method = new FluentMethod(bucket);
+                }
+
+                return method;
+            }
+        }
+
+
         /// <summary>
         /// Gets true if any where clause is used.
         /// </summary>
@@ -76,5 +93,6 @@ namespace LinqExtender.Fluent
  
         private IBucket bucket;
         private FluentEntity entity;
+        private FluentMethod method;
     }
 }

@@ -12,7 +12,7 @@ namespace LinqExtender.Tests
 {
     public class BaseFixture
     {
-        protected string ReadExpected()
+        protected string Expected()
         {
             var frame = new StackTrace(1).GetFrame(0);
 
@@ -23,7 +23,7 @@ namespace LinqExtender.Tests
             return expected;
         }
 
-        protected string ReadSource(StringBuilder builder)
+        protected string Source(StringBuilder builder)
         {
             string content = builder.ToString();
             return Regex.Replace(content, "[\r\n\t]", string.Empty);

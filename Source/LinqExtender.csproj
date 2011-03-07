@@ -89,6 +89,7 @@
     <Compile Include="BucketItem.cs" />
     <Compile Include="ClassGenerator.cs" />
     <Compile Include="Collection\ReadOnlyQueryCollection.cs" />
+    <Compile Include="Fluent\FluentMethod.cs" />
     <Compile Include="LogicalOperator.cs" />
     <Compile Include="ExpressionVisitor.cs" />
     <Compile Include="Fluent\FluentBucket.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Abstraction\IVersionItem.cs" />
     <Compile Include="IQueryContext.cs" />
     <Compile Include="MemberReference.cs" />
+    <Compile Include="MethodCall.cs" />
     <Compile Include="MethodNames.cs" />
     <Compile Include="Messages.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -107,19 +107,41 @@ namespace LinqExtender
             if (curentMethodcall != null)
             {
                 string methodName = curentMethodcall.Method.Name;
-
                 if (methodName == MethodNames.Join)
                 {
                     throw new ProviderException(Messages.DirectJoinNotSupported);
                 }
 
-                // Create a new bucket when Query<T>.Execute is called or it is empty for current type.
-                if ((!Buckets.ContainsKey(typeof(T))) || Buckets.Current.Processed)
+                if (IsOnQueryMethodCall(curentMethodcall.Method))
                 {
-                    Buckets.Current = BucketImpl<T>.NewInstance.Init();
+                    var args = new MethodCall.Parameter[curentMethodcall.Arguments.Count - 1];
+
+                    int index = 0;
+
+                    foreach (var arg in args)
+                    {
+                        var argument = curentMethodcall.Arguments[index + 1];
+
+                        this.Visit(argument);
+                        args[index] = new MethodCall.Parameter(argument.Type, this.value);
+                        
+                        index++;
+                    }
+
+                    var target = (curentMethodcall.Arguments[0] as ConstantExpression).Value;
+                    // just append the method here.
+                    Buckets.Current.Methods.Add(new MethodCall(target, curentMethodcall.Method, args));
                 }
-               
-                this.Visit(curentMethodcall);
+                else
+                {
+                    // Create a new bucket when Query<T>.Execute is called or it is empty for current type.
+                    if ((!Buckets.ContainsKey(typeof(T))) || Buckets.Current.Processed)
+                    {
+                        Buckets.Current = BucketImpl<T>.NewInstance.Init();
+                    }
+
+                    this.Visit(curentMethodcall);
+                }
             }
 
             if (typeof(T) != typeof(TS))
@@ -130,6 +152,15 @@ namespace LinqExtender
             }
 
             return (IQueryable<TS>)this;
+        }
+
+        private bool IsOnQueryMethodCall(MethodInfo methodInfo)
+        {
+            bool result = methodInfo.Name == MethodNames.Take;
+
+            result |= methodInfo.Name == MethodNames.Skip;
+
+            return result;
         }
 
         /// <summary>
@@ -171,6 +202,7 @@ namespace LinqExtender
             if (expression is MethodCallExpression)
             {
                 var mCallExp = (MethodCallExpression)expression;
+        
                 // when first , last or single is called 
                 string methodName = mCallExp.Method.Name;
 
@@ -533,12 +565,6 @@ namespace LinqExtender
         public override Expression VisitConstant(ConstantExpression expression)
         {
             this.value = expression.Value;
-
-            if (this.currentExpression is MethodCallExpression)
-            {
-                FillOptionalBucketItems(this.currentExpression);
-            }
-
             return expression;
         }
 
@@ -626,22 +652,22 @@ namespace LinqExtender
             throw new NotImplementedException(Messages.NotImplemetedExpressionWithMultipleArguments);
         }
 
-        private void FillOptionalBucketItems(Expression expression)
-        {
-            if (expression is MethodCallExpression)
-            {
-                var mCall = this.currentExpression as MethodCallExpression;
+        //private void FillOptionalBucketItems(Expression expression)
+        //{
+        //    if (expression is MethodCallExpression)
+        //    {
+        //        var mCall = this.currentExpression as MethodCallExpression;
 
-                if (mCall.Method.Name == MethodNames.Take)
-                {
-                    Buckets.Current.ItemsToTake = (int)value;
-                }
-                else if (mCall.Method.Name == MethodNames.Skip)
-                {
-                    Buckets.Current.ItemsToSkip = (int)value;
-                }
-            }
-        }
+        //        if (mCall.Method.Name == MethodNames.Take)
+        //        {
+        //            Buckets.Current.ItemsToTake = (int)value;
+        //        }
+        //        else if (mCall.Method.Name == MethodNames.Skip)
+        //        {
+        //            Buckets.Current.ItemsToSkip = (int)value;
+        //        }
+        //    }
+        //}
 
         private TreeNode GetCurrentNode(TreeNode parentNode, LogicalOperator op)
         {
@@ -706,11 +732,11 @@ namespace LinqExtender
             {
                 if (binaryExpression.Left is MemberExpression)
                 {
-                    ExtractDataFromExpression(Buckets.Current, binaryExpression.Left, binaryExpression.Right);//expression.Left);
+                    ExtractDataFromExpression(Buckets.Current, binaryExpression.Left, binaryExpression.Right);
                 }
                 else
                 {
-                    // this is needed for enum comparsion. i.e. there is Convert(ph.something) in the expression.
+                    // For enumeration comparison, parse the additional Covert(ph.something) call 
                     if (binaryExpression.Left is UnaryExpression)
                     {
                         var uExp = (UnaryExpression)binaryExpression.Left;
@@ -738,7 +764,6 @@ namespace LinqExtender
                         }
                         else
                         {
-                            // try a method call fill up.
                             FillBucketFromMethodCall(binaryExpression, methodCallExpression);
                         }
                     }
@@ -750,10 +775,8 @@ namespace LinqExtender
 
                 if (methodCallExpression != null)
                 {
-                    // try a method call fill up.
                     FillBucketFromMethodCall(binaryExpression, methodCallExpression);
                 }
-
             }
         }
 
@@ -832,8 +855,8 @@ namespace LinqExtender
             // for nested types.
             if (memberExpression.Member.DeclaringType != typeof(T) &&
                 memberExpression.Member.DeclaringType != typeof(T).BaseType &&
-                memberExpression.Member.DeclaringType.IsInterface == false &&
-                memberExpression.Member.DeclaringType.IsAbstract == false)
+                !memberExpression.Member.DeclaringType.IsInterface &&
+                !memberExpression.Member.DeclaringType.IsAbstract)
             {
                 Type targetType = memberExpression.Member.DeclaringType;
 
@@ -1121,16 +1144,14 @@ namespace LinqExtender
         }
 
 
-        private delegate bool ActualMethodHandler(Bucket bucket);
-
         private object value;
-
         private TreeNode parent;
         private int level;
-
         private Expression currentExpression;
         private Buckets<T> queryObjects;
         private readonly IModifiableCollection<T> collection;
         private object projectedQuery;
+
+        private delegate bool ActualMethodHandler(Bucket bucket);
     }
 }
