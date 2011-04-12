@@ -2,5 +2,5 @@
 layout : default
 title : Downloads
 ---
-[LinqExtender-3.0.2.zip](https://github.com/downloads/mehfuzh/LinqExtender/LinqExtender-3.0.2.zip) | [Source](https://github.com/mehfuzh/LinqExtender)
+[LinqExtender-3.0.3.zip](https://github.com/downloads/mehfuzh/LinqExtender/LinqExtender-3.0.3.zip) | [Source](https://github.com/mehfuzh/LinqExtender)
 
