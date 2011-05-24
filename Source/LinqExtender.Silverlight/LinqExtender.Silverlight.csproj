@@ -72,6 +72,9 @@
     <Compile Include="..\Abstraction\IModifiableCollection.cs">
       <Link>Abstraction\IModifiableCollection.cs</Link>
     </Compile>
+    <Compile Include="..\Abstraction\IQueryContextImpl.cs">
+      <Link>Abstraction\IQueryContextImpl.cs</Link>
+    </Compile>
     <Compile Include="..\Abstraction\IQueryObject.cs">
       <Link>Abstraction\IQueryObject.cs</Link>
     </Compile>
@@ -194,6 +197,9 @@
     </Compile>
     <Compile Include="..\Queryable.cs">
       <Link>Queryable.cs</Link>
+    </Compile>
+    <Compile Include="..\QueryContextImpl.cs">
+      <Link>QueryContextImpl.cs</Link>
     </Compile>
     <Compile Include="..\QueryItemComparer.cs">
       <Link>QueryItemComparer.cs</Link>

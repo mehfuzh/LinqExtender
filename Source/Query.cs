@@ -17,9 +17,20 @@ namespace LinqExtender
         /// <summary>
         /// Creates a new instance of <see cref="Query{T}"/> class.
         /// </summary>
-        public Query()
+        public Query(IQueryContext<T> context)
         {
-            this.collection = new QueryCollection<T>();
+            this.context = new QueryContextImpl<T>(context);
+        }
+
+        /// <summary>
+        /// Gets the current context associated with the provider.
+        /// </summary>
+        internal IQueryContextImpl<T> Context
+        {
+            get
+            {
+                return context;
+            }
         }
 
         /// <summary>
@@ -31,7 +42,7 @@ namespace LinqExtender
         {
             get
             {
-                return ((QueryCollection<T>)this.collection).Items[index];
+                return ((QueryCollection<T>)context.Collection).Items[index];
             }
         }
 
@@ -224,7 +235,7 @@ namespace LinqExtender
 
             }
 
-            return ((QueryCollection<T>)this.collection).Items;
+            return ((QueryCollection<T>)context.Collection).Items;
         }
 
         #endregion
@@ -238,7 +249,7 @@ namespace LinqExtender
         /// <returns></returns>
         public T Single()
         {
-            return this.collection.Single();
+            return context.Collection.Single();
         }
 
         /// <summary>
@@ -247,7 +258,7 @@ namespace LinqExtender
         /// <returns></returns>
         public T SingleOrDefault()
         {
-            return this.collection.SingleOrDefault();
+            return context.Collection.SingleOrDefault();
         }
 
         /// <summary>
@@ -256,7 +267,7 @@ namespace LinqExtender
         /// <returns></returns>
         public T First()
         {
-            return this.collection.First();
+            return context.Collection.First();
         }
 
         /// <summary>
@@ -265,7 +276,7 @@ namespace LinqExtender
         /// <returns></returns>
         public T FirstOrDefault()
         {
-            return this.collection.FirstOrDefault();
+            return context.Collection.FirstOrDefault();
         }
 
         /// <summary>
@@ -274,7 +285,7 @@ namespace LinqExtender
         /// <returns></returns>
         public T Last()
         {
-            return this.collection.Last();
+            return context.Collection.Last();
         }
 
         /// <summary>
@@ -283,7 +294,7 @@ namespace LinqExtender
         /// <returns></returns>
         public T LastOrDefault()
         {
-            return this.collection.LastOrDefault();
+            return context.Collection.LastOrDefault();
         }
 
         #endregion
@@ -296,7 +307,7 @@ namespace LinqExtender
         /// <returns></returns>
         public bool Any()
         {
-            return this.collection.Any();
+            return context.Collection.Any();
         }
 
         /// <summary>
@@ -305,7 +316,7 @@ namespace LinqExtender
         /// <returns></returns>
         public object Count()
         {
-            return this.collection.Count();
+            return context.Collection.Count();
         }
 
         #endregion
@@ -320,6 +331,8 @@ namespace LinqExtender
                 currentExpression = null;
             }
             Buckets.Clear();
+
+            Clear();
         }
 
         #endregion
@@ -329,7 +342,7 @@ namespace LinqExtender
         /// </summary>
         public void Clear()
         {
-            this.collection.Clear();
+            context.Collection.Clear();
         }
 
         /// <summary>
@@ -341,7 +354,7 @@ namespace LinqExtender
             {
                 foreach (var orderByInfo in Buckets.Current.OrderByItems)
                 {
-                    ((QueryCollection<T>)this.collection)
+                    ((QueryCollection<T>)context.Collection)
                         .Sort(new QueryItemComparer<QueryObject<T>>(orderByInfo.Member.MemberInfo.Name, orderByInfo.IsAscending));
                 }
             }
@@ -353,7 +366,7 @@ namespace LinqExtender
         /// <param name="value">query object.</param>
         public void Remove(T value)
         {
-            this.collection.Remove(value);
+            context.Collection.Remove(value);
         }
 
         /// <summary>
@@ -362,7 +375,7 @@ namespace LinqExtender
         /// <param name="items"></param>
         public void AddRange(IEnumerable<T> items)
         {
-            this.collection.AddRange(items);
+            context.Collection.AddRange(items);
         }
 
         /// <summary>
@@ -372,11 +385,11 @@ namespace LinqExtender
         /// <param name="inMemorySort">true/false</param>
         public void AddRange(IEnumerable<T> items, bool inMemorySort)
         {
-            this.collection.AddRange(items);
+            context.Collection.AddRange(items);
 
             if (inMemorySort)
             {
-                this.collection.Sort();
+                context.Collection.Sort();
             }
         }
 
@@ -386,7 +399,7 @@ namespace LinqExtender
         /// <param name="item"></param>
         public void Add(T item)
         {
-            this.collection.Add(item);
+            context.Collection.Add(item);
         }
 
         #region Tobe overriden methods
@@ -432,7 +445,7 @@ namespace LinqExtender
         ///</summary>
         public void SubmitChanges()
         {
-            var queryColleciton = (QueryCollection<T>)collection;
+            var queryColleciton = (QueryCollection<T>)context.Collection;
 
             var bucket = BucketImpl<T>.NewInstance.Init();
 
@@ -1093,7 +1106,7 @@ namespace LinqExtender
             {
                 try
                 {
-                    ExecuteQuery(item, this.collection);
+                    ExecuteQuery(item, context.Collection);
                 }
                 catch (Exception ex)
                 {
@@ -1149,8 +1162,8 @@ namespace LinqExtender
         private int level;
         private Expression currentExpression;
         private Buckets<T> queryObjects;
-        private readonly IModifiableCollection<T> collection;
         private object projectedQuery;
+        private IQueryContextImpl<T> context;
 
         private delegate bool ActualMethodHandler(Bucket bucket);
     }

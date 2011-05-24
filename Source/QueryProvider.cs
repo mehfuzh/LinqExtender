@@ -6,9 +6,9 @@ namespace LinqExtender
 {
     internal class QueryProvider<T> : Query<T>
     {
-        public QueryProvider(IQueryContext<T> context)
+        public QueryProvider(IQueryContext<T> context) : base(context)
         {
-            this.context = context;
+
         }
 
         internal override void ExecuteQuery(IBucket bucket, IModifiableCollection<T> items)
@@ -88,7 +88,7 @@ namespace LinqExtender
                 blockExpression.Expressions.Add(new Ast.MethodCallExpression(method));
             });
            
-            items.AddRange(this.context.Execute(blockExpression));
+            items.AddRange(Context.Execute(blockExpression));
         }
 
         private void MarkAsChild(Ast.Expression childExpression)
@@ -103,7 +103,5 @@ namespace LinqExtender
         {
             return expressionStack.Count > 0 ? expressionStack.Peek() : null;
         }
-
-        private IQueryContext<T> context;
     }
 }

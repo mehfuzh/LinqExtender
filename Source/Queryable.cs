@@ -13,7 +13,7 @@ namespace LinqExtender
     {
         public static IQueryable<TSource> Where<TSource>(this IQueryContext<TSource> source, Expression<Func<TSource, bool>> predicate)
         {
-            MethodInfo currentMethod = (MethodInfo) MethodInfo.GetCurrentMethod();
+            MethodInfo currentMethod = (MethodInfo)MethodInfo.GetCurrentMethod();
             var args = new[] { typeof(TSource) };
             return CreateQuery<TSource, TSource, Func<TSource, bool>>(source, currentMethod, predicate, args);
         }
@@ -33,19 +33,20 @@ namespace LinqExtender
         }
 
 
-        public static IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(this IQueryContext<TOuter> outer, 
-            IQueryContext<TInner> inner, 
-            Expression<Func<TOuter, TKey>> outerKeySelector, 
-            Expression<Func<TInner, TKey>> innerKeySelector, 
-            Expression<Func<TOuter, TInner, TResult>> resultSelector){
+        public static IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(this IQueryContext<TOuter> outer,
+            IQueryContext<TInner> inner,
+            Expression<Func<TOuter, TKey>> outerKeySelector,
+            Expression<Func<TInner, TKey>> innerKeySelector,
+            Expression<Func<TOuter, TInner, TResult>> resultSelector)
+        {
 
-                throw new NotImplementedException("Not yet implemented");
+            throw new NotImplementedException("Not yet implemented");
         }
 
 
         private static IQueryable<TResult> CreateQuery<TSource, TResult, TDelegate>(IQueryContext<TSource> source,
-            MethodInfo methodInfo, 
-            Expression<TDelegate> expression, 
+            MethodInfo methodInfo,
+            Expression<TDelegate> expression,
             Type[] genArgs)
         {
             BindingFlags flags = BindingFlags.Static | BindingFlags.Public;
@@ -66,7 +67,7 @@ namespace LinqExtender
             Expression constant = Expression.Constant(list.AsQueryable(), typeof(IQueryable<TSource>));
             Expression call = Expression.Call(targetMethod, constant, expression);
 
-            return GetProvider(source).CreateQuery<TResult>(call);
+            return new QueryProvider<TSource>(source).CreateQuery<TResult>(call);
         }
 
         public static IQueryable<TResult> Select<TSource, TResult>(this IQueryContext<TSource> source, Expression<Func<TSource, TResult>> selector)
@@ -75,19 +76,5 @@ namespace LinqExtender
             var args = new[] { typeof(TSource), typeof(TResult) };
             return CreateQuery<TSource, TResult, Func<TSource, TResult>>(source, currentMethod, selector, args) as IQueryable<TResult>;
         }
-
-        private static IQueryProvider GetProvider<TSource>(IQueryContext<TSource> source)
-        {
-            if (providers.ContainsKey(source))
-                return providers[source];
-
-            providers.Add(source, new QueryProvider<TSource>(source));
-
-            return providers[source];
-
-        }
-
-        [ThreadStatic]
-        static IDictionary<object, IQueryProvider> providers = new Dictionary<object, IQueryProvider>();
     }
 }

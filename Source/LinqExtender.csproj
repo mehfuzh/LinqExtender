@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstraction\IQueryContextImpl.cs" />
     <Compile Include="Ast\BlockExpression.cs" />
     <Compile Include="Ast\LambdaExpression.cs" />
     <Compile Include="Ast\LiteralExpression.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Abstraction\IModifiableCollection.cs" />
     <Compile Include="Abstraction\IMethodCall.cs" />
     <Compile Include="Queryable.cs" />
+    <Compile Include="QueryContextImpl.cs" />
     <Compile Include="QueryProvider.cs" />
     <Compile Include="BinaryOperator.cs" />
     <Compile Include="TreeNode.cs" />
