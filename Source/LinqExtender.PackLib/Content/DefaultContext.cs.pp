@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LinqExtender;
+using Ast = LinqExtender.Ast;
 
 namespace $rootnamespace$
 {

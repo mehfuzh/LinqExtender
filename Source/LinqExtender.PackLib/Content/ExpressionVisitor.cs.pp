@@ -1,5 +1,7 @@
 ﻿using System;
 using LinqExtender;
+using Ast = LinqExtender.Ast;
+
 
 namespace $rootnamespace$
 {
