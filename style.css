@@ -40,6 +40,7 @@ header img
 	float:left;
    
     padding-left: 10px;
+    padding-bottom : 10px;	
    	border : 1px solid #DDD;
     background-color: #EEE;
     -webkit-border-top-left-radius: 5px;
