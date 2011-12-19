@@ -40,7 +40,7 @@ namespace LinqExtender.Tests
         }
 
         [Test]
-        public void ShouldNotCopyTakeAndSkipToNextQuery()
+        public void ShouldNotCacheTakeOrSkipFromPreviousContext()
         {
             var expected = (from book in new FakeContext(GetBooks())select book).Skip(1).Take(1).ToArray();
             var actual = (from book in new FakeContext(GetBooks()) select book).ToArray();
