@@ -8,7 +8,7 @@ namespace LinqExtender
     {
         public QueryProvider(IQueryContext<T> context) : base(context)
         {
-
+            // intentionally left blank
         }
 
         internal override void ExecuteQuery(IBucket bucket, IModifiableCollection<T> items)

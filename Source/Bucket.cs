@@ -215,7 +215,7 @@ namespace LinqExtender
         }
 
         private string name = string.Empty;
-        private static IList<MethodCall> methods;
+        private IList<MethodCall> methods;
         private string[] uniqueItemNames;
         private string[] uniquePropertyNames;
         private IDictionary<string, BucketItem> items;

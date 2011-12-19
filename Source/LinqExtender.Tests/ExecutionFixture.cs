@@ -39,6 +39,15 @@ namespace LinqExtender.Tests
             Assert.AreEqual(2, query.First().Id);
         }
 
+        [Test]
+        public void ShouldNotCopyTakeAndSkipToNextQuery()
+        {
+            var expected = (from book in new FakeContext(GetBooks())select book).Skip(1).Take(1).ToArray();
+            var actual = (from book in new FakeContext(GetBooks()) select book).ToArray();
+
+            Assert.AreNotEqual(expected.Count(), actual.Count());
+        }
+
         internal class FakeContext : ExpressionVisitor,  IQueryContext<Book>
         {
             internal FakeContext(IList<Book> source)
@@ -51,10 +60,14 @@ namespace LinqExtender.Tests
             {
                 this.Visit(expression);
 
-                var lambda = Expression.Lambda(this.expression, new[] { parameter });
-                var func = (Func<Book, bool>)lambda.Compile();
+                var result = source.AsQueryable();
 
-                var result =  source.Where(func).AsQueryable();
+                if (this.expression != null)
+                {
+                    var lambda = Expression.Lambda(this.expression, new[] { parameter });
+                    var func = (Func<Book, bool>)lambda.Compile();
+                    result = source.Where(func).AsQueryable();
+                }
 
                 foreach (var methodCall in methodCalls)
                 {
@@ -69,9 +82,8 @@ namespace LinqExtender.Tests
 
                     var exp = Expression.Call(methodCall.Method, parameters);
 
-                    result = (IQueryable<Book>) Expression.Lambda(exp).Compile().DynamicInvoke();
+                    result = (IQueryable<Book>)Expression.Lambda(exp).Compile().DynamicInvoke();
                 }
-
                 return result.AsEnumerable();
             }
 
@@ -80,7 +92,7 @@ namespace LinqExtender.Tests
                 parameter = Expression.Parameter(expression.Type.UnderlyingType, "x");
                 return expression;
             }
-
+           
             public override Ast.Expression VisitBinaryExpression(Ast.BinaryExpression expression)
             {
                 this.Visit(expression.Left);
@@ -124,7 +136,7 @@ namespace LinqExtender.Tests
         {
             IList<Book> books = new List<Book>();
 
-            books.Add(new Book { Id = 1, Author = "Steve" });
+            books.Add(new Book { Id = 1, Author = "Scott" });
             books.Add(new Book { Id = 2, Author = "John" });
 
             return books;
