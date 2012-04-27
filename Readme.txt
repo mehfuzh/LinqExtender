@@ -11,7 +11,7 @@ Build Requirments
 How to Get started
 =======================
 
-You will be needing an unit runner like TestDriven.Net or Galieo to get things running. The LinqExtender.Tests project has few samples that shows how you can use its simplified expression tree to 
+You will need a unit runner like TestDriven.Net or Galieo to get things running. The LinqExtender.Tests project has few samples that shows how you can use its simplified expression tree to 
 produce expected target query or request while building your provider.
 
 There is a ExpreesionTreeVisitor class (supplied in LinqExtender.Tests) that you can include in your application along with LinqExtender.dll.This tree visitor walks the LinqExtender tree.
