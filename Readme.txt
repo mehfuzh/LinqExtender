@@ -3,9 +3,8 @@ LinqExtender - toolkit for creating custom Linq providers.
 
 Build Requirments
 ===================
+Framework target : .net 3.5 or better.
 
-1. You will be needing Visual Studio 2010 express or better to build this project.
-2. This is a .net 3.5 project.
 
 
 How to Get started
