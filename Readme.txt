@@ -1,7 +1,7 @@
 LinqExtender - toolkit for creating custom LINQ providers.
 =============================================================
 
-Build Requirments
+Build Requirements
 ===================
 Framework target : .net 3.5 or better.
 
@@ -10,12 +10,11 @@ Framework target : .net 3.5 or better.
 How to Get started
 =======================
 
-You will need a unit runner like TestDriven.Net or Galieo to get things running. You can start with the test project that contains few samples on how you can leverage the simplified expression tree to 
-produce expected meta expression as you build your provider.
+You will need a unit runner like TestDriven.Net or Galieo to get things running. You can start with the test project that contains few samples on how you can leverage the simplified expression tree to produce expected meta expression as you build your provider.
 
 There is a ExpreesionTreeVisitor class (supplied in LinqExtender.Tests) that you can include in your application along with LinqExtender.dll. This visitor class is used for walking the LinqExtender tree.
 
-The tree model is simplied in the folllowing way:
+The tree model is simplified in the following way:
 
 	BlockExpression
 		var query = from book in context
