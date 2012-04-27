@@ -55,7 +55,7 @@ IQueryContext<T>
 
 Thus, traverse the visitor. The visitor has a lot of handy getters and methods to speed things up.
 
-You can find more reference at http://weblogs.asp.net/mehfuzh. 
+You can find more references at http://weblogs.asp.net/mehfuzh. 
 
 
 Hope that helps,
