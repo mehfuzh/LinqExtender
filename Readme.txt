@@ -7,7 +7,7 @@ Framework target : .net 3.5 or better.
 
 
 
-How to Get started
+How to get started
 =======================
 
 You will need a unit runner like TestDriven.Net or Galieo to get things running. You can start with the test project that contains few samples on how you can leverage the simplified expression tree to produce expected meta expression as you build your provider.
